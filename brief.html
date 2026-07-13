@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto sitio — Vinos con Mary Pepa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent:    #880000;
+      --accent-lt: #F7EDEF;
+      --bg:        #FAFAF7;
+      --surface:   #F2EEE8;
+      --text:      #1A1A1A;
+      --muted:     #6B6B6B;
+      --border:    #E4DED4;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 0.9375rem;
+      line-height: 1.65;
+    }
+
+    .nav {
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav .wordmark {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-label {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .container {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .page-header {
+      padding: 4rem 0 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header .eyebrow {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .page-header h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .page-header .subtitle {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      max-width: 520px;
+    }
+
+    .section { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+    .section:last-child { border-bottom: none; }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.375rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .section-title .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot-green  { background: #2D7A4F; }
+    .dot-amber  { background: #B46A00; }
+    .dot-gray   { background: var(--border); border: 1px solid var(--muted); }
+
+    .checklist { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+    }
+    .check-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.625rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .check-done  { background: #E6F4ED; color: #2D7A4F; }
+    .check-pend  { background: #FEF3E2; color: #B46A00; }
+    .check-later { background: var(--surface); color: var(--muted); }
+
+    .checklist li .item-text { flex: 1; }
+    .checklist li .item-text .note {
+      display: block;
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .step-list { list-style: none; counter-reset: steps; display: flex; flex-direction: column; gap: 1rem; }
+    .step-list li {
+      counter-increment: steps;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      font-size: 0.9rem;
+    }
+    .step-list li::before {
+      content: counter(steps);
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-list li .note {
+      display: block;
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .timeline { display: flex; flex-direction: column; gap: 1rem; }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 1rem;
+      font-size: 0.875rem;
+      align-items: start;
+    }
+    .timeline-item .phase {
+      font-weight: 500;
+      color: var(--accent);
+      font-size: 0.8125rem;
+    }
+
+    .page-footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.8125rem;
+      color: var(--muted);
+    }
+    .page-footer a { color: var(--accent); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .nav { padding: 1rem; }
+      .timeline-item { grid-template-columns: 1fr; gap: 0.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="/" class="wordmark">Vinos con Mary Pepa</a>
+    <span class="nav-label">Estado del proyecto</span>
+  </nav>
+
+  <main>
+    <div class="container">
+
+      <header class="page-header">
+        <p class="eyebrow">Sitio · vinosconmarypepa.cl</p>
+        <h1>Así va tu proyecto</h1>
+        <p class="subtitle">Un resumen de lo que está listo, lo que necesito de ti, y los pasos que siguen. Actualizado el 13 de julio de 2026.</p>
+      </header>
+
+      <section class="section">
+        <h2 class="section-title">
+          <span class="dot dot-green"></span>
+          Lo que está listo
+        </h2>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon check-done">✓</span>
+            <span class="item-text">
+              Dominio vinosconmarypepa.cl conectado al hosting definitivo (ya lo tenías registrado)
+            </span>
+          </li>
+          <li>
+            <span class="check-icon check-done">✓</span>
+            <span class="item-text">
+              Hosting conectado en Netlify, con vinosconmarypepa.cl y www como dominios activos
+            </span>
+          </li>
+          <li>
+            <span class="check-icon check-done">✓</span>
+            <span class="item-text">
+              Página "próximamente" publicada mientras definimos el sitio
+            </span>
+          </li>
+          <li>
+            <span class="check-icon check-done">✓</span>
+            <span class="item-text">
+              Se retiró el redirect antiguo a YouTube que tenía este dominio, ya no era necesario
+            </span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">
+          <span class="dot dot-amber"></span>
+          Lo que necesito de ti
+        </h2>
+        <p style="margin-bottom: 1.25rem; font-size: 0.9rem; color: var(--muted);">El dominio y el hosting ya están funcionando. Para avanzar con el sitio, necesito definir contigo:</p>
+        <ol class="step-list">
+          <li>
+            <span class="item-text">
+              <strong>Objetivo del sitio:</strong> ¿página de un evento puntual, o un hub más amplio para el podcast? Mencionaste que se viene una página de evento en los próximos días.
+            </span>
+          </li>
+          <li>
+            <span class="item-text">
+              <strong>Detalles del evento</strong> (si es lo primero que publicamos): fecha, lugar, entradas o inscripción, y cualquier material gráfico que ya tengas (flyer, fotos).
+            </span>
+          </li>
+          <li>
+            <span class="item-text">
+              <strong>Textos:</strong> descripción del evento o del sitio, según lo que definamos.
+            </span>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">
+          <span class="dot dot-gray"></span>
+          Pendiente de decisión
+        </h2>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon check-later">·</span>
+            <span class="item-text">
+              <strong>Foco del sitio:</strong> evento puntual vs. hub del podcast. Lo definimos apenas tengas los detalles del próximo evento.
+            </span>
+          </li>
+          <li>
+            <span class="check-icon check-later">·</span>
+            <span class="item-text">
+              <strong>Paleta visual:</strong> por ahora uso el burdeos #880000 de la presentación del podcast como referencia, a confirmar cuando tengamos el brief completo.
+            </span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">
+          <span class="dot dot-green"></span>
+          Siguientes pasos
+        </h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <span class="phase">Tú me envías</span>
+            <span>Detalles del evento y el material que ya tengas</span>
+          </div>
+          <div class="timeline-item">
+            <span class="phase">Yo desarrollo</span>
+            <span>Página de evento con la estructura y textos definidos</span>
+          </div>
+          <div class="timeline-item">
+            <span class="phase">Revisión</span>
+            <span>Tú apruebas o pides ajustes</span>
+          </div>
+          <div class="timeline-item">
+            <span class="phase">Publicación</span>
+            <span>El sitio queda publicado en vinosconmarypepa.cl</span>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    Proyecto desarrollado por <a href="https://evo.cl" target="_blank">EVO Creative Lab</a> para María Paz Jiménez · 2026
+  </footer>
+
+</body>
+</html>

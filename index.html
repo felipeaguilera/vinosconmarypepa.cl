@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vinos con Mary Pepa — Próximamente</title>
+  <meta name="description" content="Sitio en construcción.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #880000;
+      --bg: #FAFAF7;
+      --surface: #F2EEE8;
+      --text: #1A1A1A;
+      --muted: #6B6B6B;
+      --border: #E4DED4;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+
+    .card {
+      text-align: center;
+      max-width: 480px;
+    }
+
+    .wordmark {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: clamp(2rem, 7vw, 3rem);
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.5rem 1.25rem;
+      font-size: 0.8125rem;
+      color: var(--text);
+      margin-bottom: 2.5rem;
+    }
+    .status .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+    }
+    .contact a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s ease;
+    }
+    .contact a:hover { border-color: var(--accent); }
+    .contact .label {
+      color: var(--muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-right: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <p class="wordmark">Vinos con Mary Pepa</p>
+    <p class="tagline">Un proyecto de María Paz Jiménez</p>
+
+    <div class="status">
+      <span class="dot"></span>
+      Sitio en construcción
+    </div>
+
+    <div class="contact">
+      <p><span class="label">Instagram</span><a href="https://instagram.com/mariapazjimenezvino" target="_blank">@mariapazjimenezvino</a></p>
+      <p><span class="label">Email</span><a href="mailto:mariapaz@mariapazjimenez.cl">mariapaz@mariapazjimenez.cl</a></p>
+    </div>
+  </div>
+
+</body>
+</html>
