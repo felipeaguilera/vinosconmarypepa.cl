@@ -16,8 +16,8 @@ const anio = new Date(evento.fecha.inicio).getFullYear();
       <img
         src="/assets/logos/marypepa-logo.svg"
         alt={sitio.nombre}
-        width="44"
-        height="44"
+        width="90"
+        height="90"
         class="footer-logo"
       />
       <p class="footer-nombre">{sitio.nombre}</p>
@@ -74,10 +74,11 @@ const anio = new Date(evento.fecha.inicio).getFullYear();
   }
 
   .footer-logo {
-    width: 44px;
-    height: 44px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    margin: 0 auto 0.75rem;
+    margin: 0 auto 1rem;
+    box-shadow: 0 0 0 3px rgba(242, 240, 228, 0.2);
   }
 
   .footer-nombre {
@@ -162,6 +163,12 @@ const anio = new Date(evento.fecha.inicio).getFullYear();
   @media (min-width: 640px) {
     .site-footer {
       padding: 4rem 0 2.5rem;
+    }
+
+    .footer-logo {
+      width: 90px;
+      height: 90px;
+      margin-bottom: 1.15rem;
     }
 
     .contacto-grid {
