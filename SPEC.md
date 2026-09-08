@@ -90,28 +90,13 @@ visual completo.
 
 **Listo**
 
-- Dominio, DNS y hosting funcionando
-- Página "próximamente" publicada, migrada a Astro sin cambio visual
+- Dominio, DNS y hosting funcionando en Netlify
+- Landing page de evento Woman Wine (`/feria/woman-wine` y portada destacada)
+- Sistema modular de datos en JSON con componentes Astro
+- Galería compacta de 14 enólogas participantes en carrusel horizontal
+- Header fixed con acceso directo a compra de entradas
+- Sitio abierto a indexación en motores de búsqueda (`robots.txt` y metadatos OG)
 - Brief del proyecto disponible en `/brief.html`
-- Carpeta local montada y conectada al repo
-
-**Pendiente de la clienta**
-
-- Definir foco: evento puntual vs. hub del podcast
-- Detalles del primer evento: fecha, lugar, precio, cupos, material gráfico
-- Textos definitivos
-- Confirmar paleta y tipografías
-
-**Pendiente de decisión técnica**
-
-- Proveedor de pago: Mercado Pago o Transbank. Ambos se integran como link
-  externo, sin backend. Si más adelante se necesita checkout embebido, hay que
-  evaluar Netlify Functions.
-- Formulario de inscripción: la opción por defecto es Netlify Forms, que no
-  requiere backend y notifica por correo. Alternativa: `mailto:` simple.
-- Mapa: la opción por defecto es un enlace a Google Maps más una imagen estática,
-  para evitar el iframe de Maps y su costo en rendimiento y privacidad. Se
-  evalúa embed solo si la clienta lo pide.
 
 ---
 
@@ -137,7 +122,6 @@ alineado con el resto de los sitios de EVO.
 archivo de datos, la plantilla es una sola. Así agregar un evento no implica
 duplicar HTML ni arriesgar que se desincronicen los estilos.
 
-**El sitio arranca con `noindex` y `robots.txt` cerrado.** Mientras esté la
-página de construcción no queremos que Google indexe un placeholder y lo deje
-cacheado. Al publicar el sitio real hay que quitar el `noindex` de `index.astro`
-y abrir el `robots.txt`.
+**Indexación abierta para la feria.** Al publicarse la primera feria oficial, el
+sitio abre `robots.txt` y emite metadatos canónicos y tarjetas Open Graph
+completas para compartir en WhatsApp e Instagram.

@@ -5,7 +5,6 @@ import Header from '../components/Header.astro';
 import EventoHero from '../components/evento/EventoHero.astro';
 import EventoContenido from '../components/evento/EventoContenido.astro';
 import EventoDatos from '../components/evento/EventoDatos.astro';
-import EventoEnologas from '../components/evento/EventoEnologas.astro';
 import EventoEntradas from '../components/evento/EventoEntradas.astro';
 import EventoUbicacion from '../components/evento/EventoUbicacion.astro';
 import EventoContacto from '../components/evento/EventoContacto.astro';
@@ -24,27 +23,24 @@ const pageTitle = `${evento.titulo} | ${sitio.nombre}`;
 const pageDescription = evento.bajada || evento.descripcion || `${evento.titulo} presentado por ${evento.presenta}`;
 ---
 
-<Base title={pageTitle} description={pageDescription} canonical={canonical} image={evento.imagenes.og} noindex={true}>
+<Base title={pageTitle} description={pageDescription} canonical={canonical} image={evento.imagenes.og} noindex={false}>
   <Header evento={evento} />
 
   <main class="evento-layout">
     <!-- 1. Hero -->
     <EventoHero evento={evento} />
 
-    <!-- 2. Contenido: foto de María Paz, descripción y CTA -->
+    <!-- 2. Presentación y Participantes -->
     <EventoContenido evento={evento} />
 
-    <!-- 3. Enólogas / Participantes -->
-    <EventoEnologas evento={evento} />
-
-    <!-- 4. Entradas y pago: panel de reserva -->
+    <!-- 3. Entradas y pago: panel de reserva -->
     <EventoEntradas evento={evento} />
 
-    <!-- 5. Más info: restricciones del evento -->
-    <EventoDatos evento={evento} />
-
-    <!-- 6. Ubicación y Galería del Lugar -->
+    <!-- 5. Ubicación y Galería del Lugar -->
     <EventoUbicacion evento={evento} />
+
+    <!-- 6. Información adicional / Restricciones (secundario) -->
+    <EventoDatos evento={evento} />
 
     <!-- 7. Footer: contacto y créditos -->
     <EventoContacto evento={evento} />
@@ -61,5 +57,6 @@ const pageDescription = evento.bajada || evento.descripcion || `${evento.titulo}
      ya traen su propio .seccion-contenedor con max-width interno. */
   .evento-layout {
     overflow-x: clip;
+    padding-top: var(--header-alto);
   }
 </style>

@@ -22,19 +22,7 @@
     "fotos": [
       {
         "archivo": "/assets/locacion/terraza-noche-01.jpg",
-        "alt": "Espacio al aire libre de noche con vista a la ciudad"
-      },
-      {
-        "archivo": "/assets/locacion/terraza-vista-04.jpg",
-        "alt": "Vista panorámica de la ciudad desde el recinto"
-      },
-      {
-        "archivo": "/assets/locacion/terraza-mesa-02.jpg",
-        "alt": "Montaje de sillas y centros de flores en la Terraza"
-      },
-      {
-        "archivo": "/assets/locacion/noso-salon-01.jpg",
-        "alt": "Salón del evento con mesas dispuestas"
+        "alt": "Terraza Hotel W Santiago"
       }
     ],
     "logo": "/assets/logos/noso-logo.png"
@@ -51,9 +39,9 @@
   },
   "pago": {
     "proveedor": "webpay",
-    "estado": "proximamente",
-    "urlLink": "",
-    "textoBoton": "Compra tu entrada"
+    "estado": "activo",
+    "urlLink": "https://mariapazjimenez.cl",
+    "textoBoton": "COMPRA TU ENTRADA AQUÍ"
   },
   "restricciones": [
     "Evento exclusivo para mayores de 18 años",
@@ -192,7 +180,7 @@
     ]
   },
   "imagenes": {
-    "hero": "/assets/locacion/noso-salon-01.jpg",
+    "hero": "/assets/hero-wine.jpg",
     "og": "/assets/og/woman-wine-og.jpg"
   }
 }

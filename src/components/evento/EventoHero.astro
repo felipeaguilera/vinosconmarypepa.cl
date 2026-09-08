@@ -9,6 +9,11 @@ const { evento } = Astro.props;
 
 const lugarCompleto = [evento.lugar.nombre, evento.lugar.detalle].filter(Boolean).join(', ');
 const tieneFondo = Boolean(evento.imagenes.hero && evento.imagenes.hero.trim());
+
+const tieneLinkPago = Boolean(evento.pago.urlLink && evento.pago.urlLink.trim());
+const hrefCompra = tieneLinkPago ? evento.pago.urlLink : '#entradas';
+const targetCompra = tieneLinkPago ? '_blank' : undefined;
+const relCompra = tieneLinkPago ? 'noopener noreferrer' : undefined;
 ---
 
 <header class={`evento-hero textura-anillos ${tieneFondo ? 'con-fondo' : ''}`} id="hero">
@@ -57,9 +62,14 @@ const tieneFondo = Boolean(evento.imagenes.hero && evento.imagenes.hero.trim());
       )}
     </div>
 
-    <div class="hero-scroll-hint">
-      <a href="#entradas" class="hero-link-entradas">
-        Ver detalles y entradas &darr;
+    <div class="hero-cta-wrapper">
+      <a
+        href={hrefCompra}
+        target={targetCompra}
+        rel={relCompra}
+        class="hero-btn-compra"
+      >
+        {evento.pago.textoBoton || 'COMPRA TU ENTRADA AQUÍ'}
       </a>
     </div>
   </div>
@@ -211,35 +221,39 @@ const tieneFondo = Boolean(evento.imagenes.hero && evento.imagenes.hero.trim());
     color: var(--crema);
   }
 
-  .hero-scroll-hint {
-    margin-top: 0.25rem;
+  .hero-cta-wrapper {
+    margin-top: 0.5rem;
   }
 
-  .hero-link-entradas {
+  .hero-btn-compra {
     display: inline-block;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    color: var(--muted);
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.85rem 2.25rem;
+    border-radius: 6px;
     text-decoration: none;
-    padding: 0.35rem 0.75rem;
-    border-radius: 999px;
-    transition: color 0.15s ease, background-color 0.15s ease;
+    box-shadow: 0 4px 14px rgba(136, 0, 0, 0.25);
+    transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
   }
 
-  .con-fondo .hero-link-entradas {
-    color: var(--crema);
-    opacity: 0.85;
+  .hero-btn-compra:hover {
+    background: #6e0000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(136, 0, 0, 0.35);
   }
 
-  .hero-link-entradas:hover {
+  .con-fondo .hero-btn-compra {
+    background: var(--crema);
     color: var(--accent);
-    background-color: var(--accent-lt);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
   }
 
-  .con-fondo .hero-link-entradas:hover {
-    color: var(--crema);
-    opacity: 1;
-    background-color: rgba(250, 250, 247, 0.12);
+  .con-fondo .hero-btn-compra:hover {
+    background: #ffffff;
+    color: var(--accent-oscuro, #500000);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
   }
 
   @media (min-width: 640px) {
@@ -259,6 +273,11 @@ const tieneFondo = Boolean(evento.imagenes.hero && evento.imagenes.hero.trim());
       width: 80px;
       height: 80px;
       margin-bottom: 1.5rem;
+    }
+
+    .hero-btn-compra {
+      font-size: 1.0625rem;
+      padding: 0.95rem 2.75rem;
     }
   }
 </style>
