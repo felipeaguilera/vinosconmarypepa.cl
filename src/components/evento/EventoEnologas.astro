@@ -88,12 +88,14 @@ const { evento } = Astro.props;
 <style>
   .evento-seccion {
     padding: 3rem 0;
+    background: var(--surface);
     border-bottom: 1px solid var(--border);
   }
 
   .seccion-contenedor {
-    max-width: var(--maxw);
+    max-width: var(--maxw-ancho);
     margin: 0 auto;
+    padding: 0 1.5rem;
     text-align: center;
   }
 
@@ -121,7 +123,7 @@ const { evento } = Astro.props;
   }
 
   .tarjeta-enologa {
-    background: var(--surface);
+    background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 8px;
     overflow: hidden;
@@ -192,7 +194,7 @@ const { evento } = Astro.props;
     flex-direction: column;
     gap: 0.25rem;
     flex-grow: 1;
-    background: var(--surface);
+    background: var(--bg);
   }
 
   .enologa-nombre {

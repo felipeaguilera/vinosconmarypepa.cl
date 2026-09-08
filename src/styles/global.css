@@ -11,6 +11,7 @@
 
 :root {
   --accent: #880000;
+  --accent-oscuro: #5c0000;
   --accent-lt: #f7edef;
   --bg: #fafaf7;
   --surface: #f2eee8;
@@ -23,6 +24,69 @@
   --font-body: 'Poppins', system-ui, sans-serif;
 
   --maxw: 740px;
+  --maxw-ancho: 1080px;
+
+  --header-alto: 60px;
+}
+
+/* Utilidad compartida: panel oscuro a sangre completa (vino tinto), texto crema.
+   La usan Header, Hero, Entradas y Footer para dar ritmo alternando con las
+   secciones claras en vez de que todo el sitio sea una sola columna crema. */
+.panel-oscuro {
+  background: var(--accent);
+  color: var(--crema);
+}
+
+/* Textura decorativa sutil para paneles oscuros: anillos concéntricos por CSS,
+   sin depender de un archivo de imagen. Da personalidad sin peso extra. */
+.textura-anillos {
+  position: relative;
+  isolation: isolate;
+}
+
+.textura-anillos::before,
+.textura-anillos::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(242, 240, 228, 0.09);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.textura-anillos::before {
+  width: 220px;
+  height: 220px;
+  top: -70px;
+  left: -70px;
+}
+
+.textura-anillos::after {
+  width: 300px;
+  height: 300px;
+  bottom: -110px;
+  right: -90px;
+}
+
+.textura-anillos > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 640px) {
+  .textura-anillos::before {
+    width: 320px;
+    height: 320px;
+    top: -110px;
+    left: -60px;
+  }
+
+  .textura-anillos::after {
+    width: 420px;
+    height: 420px;
+    bottom: -160px;
+    right: -80px;
+  }
 }
 
 html {

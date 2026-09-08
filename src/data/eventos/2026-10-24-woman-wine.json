@@ -15,26 +15,26 @@
   "lugar": {
     "nombre": "Hotel W Santiago",
     "detalle": "Restaurante Noso, 4to piso",
-    "direccion": "",
-    "comuna": "",
+    "direccion": "Isidora Goyenechea 3000, piso 4",
+    "comuna": "Las Condes",
     "ciudad": "Santiago",
-    "urlMapa": "",
+    "urlMapa": "https://www.google.com/maps/search/?api=1&query=Isidora+Goyenechea+3000%2C+Las+Condes%2C+Santiago%2C+Chile",
     "fotos": [
-      {
-        "archivo": "/assets/locacion/noso-salon-01.jpg",
-        "alt": "Salón del evento con mesas dispuestas"
-      },
       {
         "archivo": "/assets/locacion/terraza-noche-01.jpg",
         "alt": "Espacio al aire libre de noche con vista a la ciudad"
+      },
+      {
+        "archivo": "/assets/locacion/terraza-vista-04.jpg",
+        "alt": "Vista panorámica de la ciudad desde el recinto"
       },
       {
         "archivo": "/assets/locacion/terraza-mesa-02.jpg",
         "alt": "Montaje de sillas y centros de flores en la Terraza"
       },
       {
-        "archivo": "/assets/locacion/terraza-vista-04.jpg",
-        "alt": "Vista panorámica de la ciudad desde el recinto"
+        "archivo": "/assets/locacion/noso-salon-01.jpg",
+        "alt": "Salón del evento con mesas dispuestas"
       }
     ],
     "logo": "/assets/logos/noso-logo.png"
@@ -192,7 +192,7 @@
     ]
   },
   "imagenes": {
-    "hero": "/assets/locacion/terraza-noche-01.jpg",
-    "og": ""
+    "hero": "/assets/locacion/noso-salon-01.jpg",
+    "og": "/assets/og/woman-wine-og.jpg"
   }
 }

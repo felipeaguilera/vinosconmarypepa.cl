@@ -12,11 +12,13 @@ const estadoEfectivo =
   evento.pago.estado === 'activo' && !evento.pago.urlLink?.trim()
     ? 'proximamente'
     : evento.pago.estado;
+
+const tieneIncluye = Boolean(evento.precio?.incluye && evento.precio.incluye.length > 0);
 ---
 
-<section class="evento-seccion seccion-entradas" id="entradas">
+<section class="evento-seccion seccion-entradas panel-oscuro textura-anillos" id="entradas">
   <div class="seccion-contenedor">
-    <h2 class="seccion-titulo">Entradas</h2>
+    <h2 class="seccion-titulo">Reserva tu lugar</h2>
 
     <div
       class="entradas-tarjeta"
@@ -29,6 +31,16 @@ const estadoEfectivo =
           <div class="contenido-estado">
             {evento.precio.textoVisible && (
               <p class="precio-destacado">{evento.precio.textoVisible}</p>
+            )}
+            {tieneIncluye && (
+              <ul class="lista-incluye">
+                {evento.precio.incluye.map((item) => (
+                  <li class="item-incluye">
+                    <span class="check-icono" aria-hidden="true">&#10003;</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             )}
             <p class="pago-aviso">La venta de entradas abrirá próximamente.</p>
             {evento.contacto.email && (
@@ -44,6 +56,16 @@ const estadoEfectivo =
           <div class="contenido-estado">
             {evento.precio.textoVisible && (
               <p class="precio-destacado">{evento.precio.textoVisible}</p>
+            )}
+            {tieneIncluye && (
+              <ul class="lista-incluye">
+                {evento.precio.incluye.map((item) => (
+                  <li class="item-incluye">
+                    <span class="check-icono" aria-hidden="true">&#10003;</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             )}
             <div class="cta-contenedor">
               <a
@@ -135,31 +157,23 @@ const estadoEfectivo =
 <style>
   .evento-seccion {
     padding: 3rem 0;
-    border-bottom: 1px solid var(--border);
   }
 
   .seccion-contenedor {
-    max-width: 580px;
+    max-width: 540px;
     margin: 0 auto;
+    padding: 0 1.5rem;
     text-align: center;
   }
 
   .seccion-titulo {
     font-family: var(--font-display);
     font-size: clamp(1.75rem, 4vw, 2.25rem);
-    color: var(--accent);
+    color: var(--crema);
     line-height: 1.2;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
     font-style: italic;
     font-weight: 600;
-  }
-
-  .entradas-tarjeta {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 2.25rem 1.5rem;
-    text-align: center;
   }
 
   .contenido-estado {
@@ -170,23 +184,49 @@ const estadoEfectivo =
   }
 
   .precio-destacado {
-    font-size: 2.25rem;
-    font-weight: 600;
-    color: var(--accent);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--crema);
     line-height: 1.1;
     margin-bottom: 0.25rem;
+  }
+
+  .lista-incluye {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.5rem;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    text-align: left;
+  }
+
+  .item-incluye {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--crema);
+    opacity: 0.95;
+  }
+
+  .check-icono {
+    color: var(--crema);
+    font-weight: 700;
+    flex-shrink: 0;
   }
 
   .pago-aviso {
     font-size: 1.0625rem;
     font-weight: 500;
-    color: var(--text);
+    color: var(--crema);
   }
 
   .badge-agotado {
     display: inline-block;
-    background: var(--accent-lt);
-    color: var(--accent);
+    background: rgba(250, 250, 247, 0.15);
+    color: var(--crema);
     padding: 0.35rem 0.85rem;
     border-radius: 999px;
     font-size: 0.9375rem;
@@ -195,7 +235,8 @@ const estadoEfectivo =
 
   .pago-detalle {
     font-size: 0.875rem;
-    color: var(--muted);
+    color: var(--crema);
+    opacity: 0.8;
   }
 
   .cta-contenedor {
@@ -205,10 +246,10 @@ const estadoEfectivo =
 
   .btn-compra {
     display: inline-block;
-    background: var(--accent);
-    color: #ffffff;
+    background: var(--crema);
+    color: var(--accent);
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700;
     padding: 0.875rem 2rem;
     border-radius: 6px;
     text-decoration: none;
@@ -219,32 +260,29 @@ const estadoEfectivo =
   }
 
   .btn-compra:hover {
-    background: #6e0000;
+    background: #ffffff;
   }
 
   .pago-contacto {
     font-size: 0.875rem;
-    color: var(--muted);
+    color: var(--crema);
+    opacity: 0.8;
     margin-top: 0.5rem;
   }
 
   .pago-contacto a {
-    color: var(--text);
+    color: var(--crema);
     text-decoration: underline;
-    transition: color 0.15s ease;
+    transition: opacity 0.15s ease;
   }
 
   .pago-contacto a:hover {
-    color: var(--accent);
+    opacity: 0.75;
   }
 
   @media (min-width: 640px) {
     .evento-seccion {
-      padding: 3.5rem 0;
-    }
-
-    .entradas-tarjeta {
-      padding: 2.75rem 2rem;
+      padding: 4.5rem 0;
     }
   }
 </style>

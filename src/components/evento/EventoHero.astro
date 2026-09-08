@@ -11,7 +11,7 @@ const lugarCompleto = [evento.lugar.nombre, evento.lugar.detalle].filter(Boolean
 const tieneFondo = Boolean(evento.imagenes.hero && evento.imagenes.hero.trim());
 ---
 
-<header class={`evento-hero ${tieneFondo ? 'con-fondo' : ''}`} id="hero">
+<header class={`evento-hero textura-anillos ${tieneFondo ? 'con-fondo' : ''}`} id="hero">
   {tieneFondo && (
     <div class="hero-fondo" style={`background-image: url(${evento.imagenes.hero})`}>
       <div class="hero-velo" aria-hidden="true"></div>
@@ -19,10 +19,18 @@ const tieneFondo = Boolean(evento.imagenes.hero && evento.imagenes.hero.trim());
   )}
 
   <div class="hero-contenido">
+    <img
+      src="/assets/logos/marypepa-logo.png"
+      alt="Vinos con Marypepa"
+      width="84"
+      height="84"
+      class="hero-logo"
+    />
+
     <div class="hero-eyebrow">
-      {evento.serie && <span class="serie">{evento.serie}</span>}
+      {evento.presenta && <span class="presenta">{evento.presenta} presenta</span>}
       {evento.serie && evento.presenta && <span class="separador" aria-hidden="true">·</span>}
-      {evento.presenta && <span class="presenta">Presenta {evento.presenta}</span>}
+      {evento.serie && <span class="serie">{evento.serie}</span>}
     </div>
 
     <h1 class="hero-titulo">{evento.titulo}</h1>
@@ -31,24 +39,21 @@ const tieneFondo = Boolean(evento.imagenes.hero && evento.imagenes.hero.trim());
 
     <div class="hero-datos-clave">
       {evento.fecha.textoVisible && (
-        <div class="dato-item">
-          <span class="dato-label">Fecha y hora</span>
-          <span class="dato-valor">{evento.fecha.textoVisible}</span>
-        </div>
+        <span class="dato-item">{evento.fecha.textoVisible}</span>
       )}
 
       {lugarCompleto && (
-        <div class="dato-item">
-          <span class="dato-label">Lugar</span>
-          <span class="dato-valor">{lugarCompleto}</span>
-        </div>
+        <>
+          <span class="dato-separador" aria-hidden="true">&middot;</span>
+          <span class="dato-item">{lugarCompleto}</span>
+        </>
       )}
 
       {evento.precio.textoVisible && (
-        <div class="dato-item dato-precio">
-          <span class="dato-label">Entrada general</span>
-          <span class="dato-valor valor-precio">{evento.precio.textoVisible}</span>
-        </div>
+        <>
+          <span class="dato-separador" aria-hidden="true">&middot;</span>
+          <span class="dato-item dato-precio">{evento.precio.textoVisible}</span>
+        </>
       )}
     </div>
 
@@ -63,16 +68,17 @@ const tieneFondo = Boolean(evento.imagenes.hero && evento.imagenes.hero.trim());
 <style>
   .evento-hero {
     position: relative;
-    padding: 2.5rem 0 2rem;
+    padding: 2.5rem 1.5rem 2.5rem;
     text-align: center;
     border-bottom: 1px solid var(--border);
   }
 
   .evento-hero.con-fondo {
-    padding: 3.5rem 1.5rem 2.75rem;
+    padding: 3.5rem 1.5rem 3rem;
     border-bottom: none;
     color: var(--crema);
     overflow: hidden;
+    background: var(--accent-oscuro);
   }
 
   .hero-fondo {
@@ -88,21 +94,33 @@ const tieneFondo = Boolean(evento.imagenes.hero && evento.imagenes.hero.trim());
     inset: 0;
     background: linear-gradient(
       180deg,
-      rgba(15, 10, 9, 0.78) 0%,
-      rgba(20, 8, 8, 0.72) 45%,
-      rgba(10, 6, 6, 0.88) 100%
+      rgba(15, 10, 9, 0.8) 0%,
+      rgba(30, 6, 8, 0.72) 45%,
+      rgba(10, 6, 6, 0.9) 100%
     );
   }
 
   .hero-contenido {
     position: relative;
     z-index: 1;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .hero-logo {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto 1.25rem;
+    box-shadow: 0 0 0 4px rgba(242, 240, 228, 0.9), 0 4px 20px rgba(0, 0, 0, 0.35);
   }
 
   .hero-eyebrow {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 0.5rem;
     font-size: 0.75rem;
     font-weight: 500;
@@ -130,8 +148,8 @@ const tieneFondo = Boolean(evento.imagenes.hero && evento.imagenes.hero.trim());
     font-family: var(--font-display);
     font-style: italic;
     font-weight: 600;
-    font-size: clamp(2.5rem, 8vw, 4.25rem);
-    line-height: 1.08;
+    font-size: clamp(2.5rem, 9vw, 4.5rem);
+    line-height: 1.05;
     color: var(--accent);
     margin-bottom: 1rem;
     letter-spacing: -0.01em;
@@ -139,70 +157,62 @@ const tieneFondo = Boolean(evento.imagenes.hero && evento.imagenes.hero.trim());
 
   .con-fondo .hero-titulo {
     color: var(--crema);
-    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+    text-shadow: 0 2px 28px rgba(0, 0, 0, 0.4);
   }
 
   .hero-bajada {
     max-width: 480px;
-    margin: 0 auto 1.5rem;
-    font-size: 0.9375rem;
+    margin: 0 auto 1.75rem;
+    font-size: 1.0625rem;
     line-height: 1.55;
     color: var(--muted);
   }
 
   .con-fondo .hero-bajada {
     color: var(--crema);
-    opacity: 0.92;
+    opacity: 0.94;
   }
 
   .hero-datos-clave {
     display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1.25rem 1.5rem;
-    max-width: 540px;
-    margin: 0 auto 1.5rem;
-    text-align: left;
-  }
-
-  .con-fondo .hero-datos-clave {
-    background: rgba(250, 250, 247, 0.97);
-    border-color: rgba(250, 250, 247, 0.2);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem 0.6rem;
+    margin: 0 auto 1.75rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.4;
   }
 
   .dato-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-  }
-
-  .dato-label {
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    font-weight: 500;
-  }
-
-  .dato-valor {
-    font-size: 0.9375rem;
     color: var(--text);
-    font-weight: 500;
-    line-height: 1.35;
   }
 
-  .dato-precio .valor-precio {
+  .con-fondo .dato-item {
+    color: var(--crema);
+  }
+
+  .dato-separador {
+    color: var(--border);
+  }
+
+  .con-fondo .dato-separador {
+    color: var(--crema);
+    opacity: 0.4;
+  }
+
+  .dato-precio {
+    font-weight: 700;
     color: var(--accent);
-    font-weight: 600;
-    font-size: 1.125rem;
+  }
+
+  .con-fondo .dato-precio {
+    color: var(--crema);
   }
 
   .hero-scroll-hint {
-    margin-top: 0.5rem;
+    margin-top: 0.25rem;
   }
 
   .hero-link-entradas {
@@ -234,28 +244,21 @@ const tieneFondo = Boolean(evento.imagenes.hero && evento.imagenes.hero.trim());
 
   @media (min-width: 640px) {
     .evento-hero {
-      padding: 3.5rem 0 3rem;
+      padding: 4rem 1.5rem 3.5rem;
     }
 
     .evento-hero.con-fondo {
-      padding: 5rem 1.5rem 3.5rem;
+      padding: 6rem 1.5rem 4.5rem;
     }
 
     .hero-datos-clave {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      padding: 1.5rem;
+      font-size: 1.0625rem;
     }
 
-    .dato-item {
-      border-right: 1px solid var(--border);
-      padding-right: 1rem;
-    }
-
-    .dato-item:last-child {
-      border-right: none;
-      padding-right: 0;
+    .hero-logo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 1.5rem;
     }
   }
 </style>

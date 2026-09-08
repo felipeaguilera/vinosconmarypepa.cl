@@ -1,0 +1,212 @@
+---
+import type { EventoData } from '../../lib/eventos';
+import sitio from '../../data/sitio.json';
+
+interface Props {
+  evento: EventoData;
+}
+
+const { evento } = Astro.props;
+
+// Foto de ambiente para la franja bajo el hero: se salta la primera (esa es la
+// que usa EventoUbicacion como foto principal) y tambien la del hero, para no
+// repetir la misma imagen dos veces seguidas en la pagina.
+const fotosLugar = evento.lugar.fotos ?? [];
+const fotoAmbiente =
+  fotosLugar.slice(1).find((f) => f.archivo !== evento.imagenes.hero) ??
+  fotosLugar[1] ??
+  fotosLugar[0];
+
+const parrafosDescripcion = evento.descripcion
+  ? evento.descripcion
+      .split(/\n\s*\n/)
+      .map((p) => p.trim())
+      .filter(Boolean)
+  : [];
+---
+
+{fotoAmbiente && (
+  <figure class="foto-ambiente">
+    <img src={fotoAmbiente.archivo} alt={fotoAmbiente.alt} loading="lazy" class="foto-ambiente-img" />
+    {evento.lugar.nombre && (
+      <figcaption class="foto-ambiente-chip">
+        {[evento.lugar.nombre, evento.lugar.detalle].filter(Boolean).join(', ')}
+      </figcaption>
+    )}
+  </figure>
+)}
+
+<section class="evento-seccion seccion-contenido" id="contenido">
+  <div class="seccion-contenedor contenido-grid">
+    <div class="contenido-foto">
+      <img
+        src="/assets/mariapaz-retrato.jpg"
+        alt={sitio.organizadora}
+        loading="lazy"
+        class="contenido-foto-img"
+      />
+    </div>
+
+    <div class="contenido-texto">
+      <span class="contenido-eyebrow">Organiza</span>
+      <h2 class="contenido-nombre">{sitio.organizadora}</h2>
+
+      {parrafosDescripcion.map((parrafo) => (
+        <p class="contenido-descripcion">{parrafo}</p>
+      ))}
+
+      <a href="#entradas" class="contenido-cta">
+        Ver entradas &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .foto-ambiente {
+    position: relative;
+    margin: 0;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  .foto-ambiente-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .foto-ambiente-chip {
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+    background: rgba(15, 10, 9, 0.72);
+    color: var(--crema);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    max-width: calc(100% - 2rem);
+  }
+
+  .evento-seccion {
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .seccion-contenedor {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .contenido-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .contenido-foto {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: 10px;
+    background: var(--surface);
+  }
+
+  .contenido-foto-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+  }
+
+  .contenido-texto {
+    text-align: center;
+  }
+
+  .contenido-eyebrow {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    font-weight: 500;
+    margin-bottom: 0.35rem;
+  }
+
+  .contenido-nombre {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    color: var(--accent);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .contenido-descripcion {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+
+  .contenido-cta {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 0.15rem;
+    transition: opacity 0.15s ease;
+  }
+
+  .contenido-cta:hover {
+    opacity: 0.7;
+  }
+
+  @media (min-width: 640px) {
+    .foto-ambiente {
+      aspect-ratio: 21 / 9;
+    }
+
+    .foto-ambiente-chip {
+      left: 1.5rem;
+      bottom: 1.5rem;
+      font-size: 0.875rem;
+    }
+
+    .evento-seccion {
+      padding: 4rem 0;
+    }
+
+    .contenido-grid {
+      flex-direction: row;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .contenido-foto {
+      max-width: none;
+      flex: 0 0 300px;
+      margin: 0;
+    }
+
+    .contenido-texto {
+      text-align: left;
+      flex: 1;
+    }
+
+    .contenido-eyebrow {
+      text-align: left;
+    }
+  }
+</style>

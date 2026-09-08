@@ -627,3 +627,139 @@ ese estilo; por ahora es un placeholder funcional, no el diseño final.
 
 Se agregó `.tmp-view/` a `.gitignore` (carpeta de trabajo para renders temporales de PDF/foto
 durante esta revisión, nunca se comitea).
+
+
+**2026-09-08, tercera ronda: rediseño visual completo, de columna plana a secciones con ritmo.**
+Felipe marcó que el sitio se veía "demasiado plano" y pidió acercarlo al estilo de
+`eventos.mariapazjimenez.cl` (otro proyecto de María Paz): fondos a sangre completa,
+tratamiento mobile friendly con más personalidad. Pidió además una estructura de página
+específica basada en `Inbox/1.png` y `Inbox/2.png`: header con logo y botón, hero,
+contenido (foto de María Paz), participantes, más info, footer.
+
+**Causa raíz de la planitud, no era solo estética.** El `<main>` de `Evento.astro` envolvía
+todas las secciones en `.container`, que fija `max-width: 740px` globalmente. Eso significaba
+que ninguna sección podía llegar a sangre completa aunque su propio CSS lo intentara, el fondo
+oscuro del hero que se armó en la ronda anterior nunca se vio de borde a borde en producción por
+esto. Se sacó ese contenedor global: ahora cada sección controla su propio ancho (las que quieren
+sangre completa lo hacen, las que quieren columna de lectura ya traían su propio
+`.seccion-contenedor` interno, ese patrón ya existía en casi todos los componentes).
+
+**Cambios de componentes:**
+
+1. **`Header.astro`, nuevo.** Barra fija arriba: logo circular de Vinos con Marypepa (extraído
+   del flyer de María Paz, `Inbox/1.png`, mismo procedimiento que el logo de Noso: render,
+   recorte, fondo transparente) más un botón que abre el link de pago si la venta está activa, o
+   baja a la sección de entradas si no.
+2. **`EventoHero.astro`, reescrito.** Se saca la tarjeta blanca flotante con fecha, lugar y
+   entrada del round anterior: ahora ese dato va integrado como texto plano sobre la foto, más
+   parecido al sitio de referencia. Se agrega una textura de anillos concéntricos por CSS puro
+   (sin imagen) para dar personalidad sin peso extra.
+3. **`EventoContenido.astro`, nuevo.** Reemplaza la mitad de lo que hacía `EventoDatos.astro`.
+   Franja de foto de ambiente a sangre completa con un chip de ubicación superpuesto, y debajo la
+   foto de María Paz (`mariapaz-retrato.jpg`, ya estaba en el proyecto) junto a su nombre como
+   organizadora (nuevo campo `organizadora` en `sitio.json`, dato de sitio, no de evento) y el
+   texto de `descripcion` del evento, con botón a entradas.
+4. **`EventoEnologas.astro`.** Solo ajuste de superficie: fondo `--surface` en la sección para
+   que no se confunda con las secciones vecinas, tarjetas pasadas a `--bg` para que resalten. La
+   grilla en sí no cambió, ya estaba bien resuelta.
+5. **`EventoEntradas.astro`, reescrito como panel oscuro.** Ahora es una franja a sangre completa
+   en `--accent` (vino tinto), igual tratamiento que el hero. Se le sumó la lista de "qué
+   incluye" que antes vivía en `EventoDatos.astro`, para que precio, incluye y botón de compra
+   queden juntos en un solo momento, como en el sitio de referencia. Toda la lógica de estados
+   (activo, agotado, cerrado, próximamente, evento pasado) y el script de verificación de fecha
+   se mantuvieron sin tocar.
+6. **`EventoDatos.astro`, reducido.** Ahora solo renderiza "Más información" (las
+   restricciones). Lo que antes era "Acerca del evento" se movió a `EventoContenido.astro`, y
+   "qué incluye" se movió a `EventoEntradas.astro`.
+7. **`EventoContacto.astro`, convertido en footer real.** Franja oscura al cierre del sitio con
+   el logo y nombre de Vinos con Marypepa, el contacto (que ya estaba), y una línea de créditos
+   con el año tomado de la fecha del evento.
+8. **`global.css`.** Se agregaron dos utilidades compartidas: `.panel-oscuro` (fondo vino tinto,
+   texto crema, la usan Header, Entradas y Footer) y `.textura-anillos` (los anillos decorativos
+   por CSS, la usan Hero y Entradas).
+
+**Cómo se verificó, sin poder hacer build en el dispositivo.** El build normal (`npx astro
+build`) sigue sin poder correr en la VM del dispositivo por la limitación ya documentada
+(binario de rollup para Linux ausente en un `node_modules` armado en Windows). Esta vez se armó
+una copia de trabajo del proyecto en el entorno cloud de la sesión (Linux nativo), con
+`npm install` limpio ahí mismo, y se corrió `npx astro build` con éxito. Con el sitio ya
+compilado se sirvió localmente y se revisó con capturas de pantalla reales en 390px (móvil) y
+1360px (escritorio) para cada sección, no solo se leyó el código. Ahí se encontraron y
+confirmaron corregidos dos problemas que no eran evidentes leyendo el markup: overflow horizontal
+por los anillos decorativos (se agregó `overflow-x: clip` al layout) y un falso negativo de
+imágenes "vacías" en la galería de ubicación que resultó ser una limitación de la herramienta de
+captura con `loading="lazy"`, no un bug real del sitio (confirmado sirviendo las imágenes
+directo, todas responden 200).
+
+**Qué no se tocó:** la lógica de datos, todos los campos vienen de los mismos JSON que ya
+existían. No se inventó copy nuevo, `EventoContenido.astro` usa el campo `descripcion` que ya
+estaba en el JSON. El único dato nuevo es `sitio.organizadora`, que es un hecho de sitio (el
+nombre de María Paz como organizadora), no contenido de evento.
+
+**Pendiente de esta ronda:** los archivos quedaron escritos en el repositorio del dispositivo
+pero sin comitear, según la regla de este proyecto en `AGENTS.md` ("No hacer commit ni push sin
+que Felipe lo pida"). Falta que Felipe revise el resultado y pida el commit si le parece bien.
+Sigue pendiente de rondas anteriores: la dirección del recinto (bloquea el mapa en Ubicación), y
+la confirmación de Felipe sobre Noso/Nosso y la elección de fotos de la página 2 del PDF.
+
+## 2026-09-08 — Imagen de portada para WhatsApp/redes (og:image)
+
+**Contexto:** Felipe confirmó "Noso" (no "Nosso") en todo el sitio y dio luz verde explícita a
+seguir con las siguientes etapas ("El resto es Noso. Y hagamos las etapas siguientes. sin duda."),
+en respuesta al checklist de "qué falta para publicar" entregado al cierre de la ronda anterior.
+Se abordó el primer ítem del checklist que no depende de datos externos: la imagen que aparece
+al compartir el link del sitio en WhatsApp, Instagram o redes (og:image / twitter:image).
+
+**Qué se hizo:**
+- Se creó `public/assets/og/woman-wine-og.jpg` (1200×630, formato estándar para previews de
+  redes). Usa la foto del salón de Noso (`noso-salon-01.jpg`) con el mismo velo oscuro del hero,
+  el isotipo circular de Vinos con Marypepa, y el texto tomado directo del JSON del evento
+  (presenta, título, bajada, fecha/lugar/precio) para no reescribir ni alterar ningún copy.
+  Tipografías: Cormorant Garamond y Poppins (las mismas del sitio), autoinstaladas vía
+  `@fontsource` para tener los archivos reales de la marca.
+- `src/layouts/Base.astro`: se agregó el prop `image` y las etiquetas `og:image`,
+  `og:image:width/height` y `twitter:image` / `twitter:card` (antes el sitio no tenía imagen de
+  portada configurada, así que WhatsApp mostraba una vista previa sin imagen).
+- `src/layouts/Evento.astro`: pasa `image={evento.imagenes.og}` a `Base`.
+- `src/data/eventos/2026-10-24-woman-wine.json`: `imagenes.og` ahora apunta a
+  `/assets/og/woman-wine-og.jpg` (antes vacío).
+
+**Verificación:** build de Astro sin errores; se confirmó en el HTML generado que tanto
+`/feria/woman-wine/` como `/` (que renderiza el evento destacado en la raíz) traen la URL
+absoluta correcta (`https://vinosconmarypepa.cl/assets/og/woman-wine-og.jpg`); se sirvió el
+`dist/` localmente y se verificó que la imagen carga (200 OK, 134 KB) y se revisó visualmente
+que el texto, acentos y logo se vean correctos.
+
+**Pendiente / decisión abierta:** `AGENTS.md` indica no quitar el `noindex` ni abrir
+`robots.txt` hasta que el sitio esté aprobado para publicar. El "sin duda" de Felipe da luz
+verde a seguir avanzando, pero no queda claro si ya considera el sitio aprobado para
+publicarse de verdad (indexable) o si se refiere a seguir construyendo mientras sigue en modo
+borrador. Se le preguntó directamente en vez de decidir esto de forma unilateral.
+
+Sigue bloqueado por falta de datos reales (no se inventan, según regla de la casa): el link de
+pago de Webpay (`pago.urlLink`) y la dirección exacta del recinto (`lugar.direccion`,
+`lugar.urlMapa`).
+
+**Pendiente de esta ronda:** los archivos quedaron escritos en el repositorio del dispositivo
+pero sin comitear, según la regla de este proyecto en `AGENTS.md` ("No hacer commit ni push sin
+que Felipe lo pida").
+
+## 2026-09-08 (cont.) — Dirección del recinto y confirmación de estado
+
+Felipe confirmó:
+- El sitio sigue en modo borrador (no se toca `noindex` ni `robots.txt` todavía).
+- El link de pago de Webpay sigue pendiente de definir.
+- La dirección real del Hotel W / Restaurante Noso: Isidora Goyenechea 3000, piso 4, Las Condes,
+  Santiago (7550653).
+
+Se actualizó `src/data/eventos/2026-10-24-woman-wine.json`:
+- `lugar.direccion`: "Isidora Goyenechea 3000, piso 4" (antes vacío)
+- `lugar.comuna`: "Las Condes" (antes vacío)
+- `lugar.urlMapa`: link de búsqueda de Google Maps armado a partir de la dirección (antes vacío)
+
+Se verificó en el HTML generado (`npx astro build`) que la sección Ubicación ahora muestra la
+dirección, "Las Condes, Santiago" y el botón que enlaza al mapa, sin tocar el resto del
+componente (`EventoUbicacion.astro` ya estaba preparado para estos campos).
+
+Sigue pendiente únicamente el link real de pago de Webpay (`pago.urlLink`) para poder activar
+la venta. El sitio permanece con `noindex` mientras Felipe/María Paz lo revisan.

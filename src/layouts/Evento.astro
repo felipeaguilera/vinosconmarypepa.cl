@@ -1,7 +1,9 @@
 ---
 import Base from './Base.astro';
 import type { EventoData } from '../lib/eventos';
+import Header from '../components/Header.astro';
 import EventoHero from '../components/evento/EventoHero.astro';
+import EventoContenido from '../components/evento/EventoContenido.astro';
 import EventoDatos from '../components/evento/EventoDatos.astro';
 import EventoEnologas from '../components/evento/EventoEnologas.astro';
 import EventoEntradas from '../components/evento/EventoEntradas.astro';
@@ -22,24 +24,29 @@ const pageTitle = `${evento.titulo} | ${sitio.nombre}`;
 const pageDescription = evento.bajada || evento.descripcion || `${evento.titulo} presentado por ${evento.presenta}`;
 ---
 
-<Base title={pageTitle} description={pageDescription} canonical={canonical} noindex={true}>
-  <main class="evento-layout container">
+<Base title={pageTitle} description={pageDescription} canonical={canonical} image={evento.imagenes.og} noindex={true}>
+  <Header evento={evento} />
+
+  <main class="evento-layout">
     <!-- 1. Hero -->
     <EventoHero evento={evento} />
 
-    <!-- 2. Qué es & 3. Qué incluye -->
-    <EventoDatos evento={evento} />
+    <!-- 2. Contenido: foto de María Paz, descripción y CTA -->
+    <EventoContenido evento={evento} />
 
-    <!-- 4. Enólogas / Participantes (Tanda 4) -->
+    <!-- 3. Enólogas / Participantes -->
     <EventoEnologas evento={evento} />
 
-    <!-- 5. Entradas y pago (Tanda 3) -->
+    <!-- 4. Entradas y pago: panel de reserva -->
     <EventoEntradas evento={evento} />
 
-    <!-- 6. Ubicación y Galería del Lugar (Tanda 4) -->
+    <!-- 5. Más info: restricciones del evento -->
+    <EventoDatos evento={evento} />
+
+    <!-- 6. Ubicación y Galería del Lugar -->
     <EventoUbicacion evento={evento} />
 
-    <!-- 7. Contacto -->
+    <!-- 7. Footer: contacto y créditos -->
     <EventoContacto evento={evento} />
 
     <!-- CTA fijo para móvil (solo cuando la venta está activa) -->
@@ -48,9 +55,11 @@ const pageDescription = evento.bajada || evento.descripcion || `${evento.titulo}
 </Base>
 
 <style>
+  /* Sin max-width ni padding aca: cada seccion controla su propio ancho,
+     asi las que quieren sangre completa (hero, paneles oscuros, fotos)
+     pueden llegar de borde a borde. Las que quieren columna de lectura
+     ya traen su propio .seccion-contenedor con max-width interno. */
   .evento-layout {
-    max-width: var(--maxw);
-    margin: 0 auto;
-    padding: 0 1.5rem;
+    overflow-x: clip;
   }
 </style>

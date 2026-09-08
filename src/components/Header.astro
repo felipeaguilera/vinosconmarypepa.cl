@@ -1,0 +1,105 @@
+---
+import sitio from '../data/sitio.json';
+import type { EventoData } from '../lib/eventos';
+
+interface Props {
+  evento: EventoData;
+}
+
+const { evento } = Astro.props;
+
+// El boton del header apunta directo a la venta cuando esta activa con link real.
+// En cualquier otro estado, baja a la seccion de entradas donde se explica el estado.
+const ventaActiva = evento.pago.estado === 'activo' && Boolean(evento.pago.urlLink?.trim());
+const hrefBoton = ventaActiva ? evento.pago.urlLink : '#entradas';
+const textoBoton = ventaActiva ? (evento.pago.textoBoton || 'Compra tu entrada') : 'Ver entradas';
+---
+
+<header class="site-header">
+  <div class="site-header-contenedor">
+    <a href="/" class="site-header-logo">
+      <span class="site-header-nombre">{sitio.nombre}</span>
+    </a>
+
+    <a
+      href={hrefBoton}
+      class="site-header-boton"
+      target={ventaActiva ? '_blank' : undefined}
+      rel={ventaActiva ? 'noopener noreferrer' : undefined}
+    >
+      {textoBoton}
+    </a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--accent);
+    border-bottom: 1px solid rgba(242, 240, 228, 0.12);
+  }
+
+  .site-header-contenedor {
+    max-width: var(--maxw-ancho);
+    margin: 0 auto;
+    padding: 0 1.25rem;
+    height: var(--header-alto);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .site-header-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--crema);
+    min-width: 0;
+  }
+
+  .site-header-nombre {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .site-header-boton {
+    background: var(--crema);
+    color: var(--accent);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    padding: 0.5rem 0.9rem;
+    border-radius: 6px;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background-color 0.15s ease;
+  }
+
+  .site-header-boton:hover {
+    background: #ffffff;
+  }
+
+  @media (min-width: 640px) {
+    .site-header-contenedor {
+      padding: 0 1.5rem;
+    }
+
+    .site-header-nombre {
+      font-size: 1.125rem;
+    }
+
+    .site-header-boton {
+      font-size: 0.875rem;
+      padding: 0.6rem 1.25rem;
+    }
+  }
+</style>

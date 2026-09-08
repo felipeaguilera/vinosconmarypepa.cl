@@ -1,122 +1,174 @@
 ---
 import type { EventoData } from '../../lib/eventos';
+import sitio from '../../data/sitio.json';
 
 interface Props {
   evento: EventoData;
 }
 
 const { evento } = Astro.props;
+const anio = new Date(evento.fecha.inicio).getFullYear();
 ---
 
-<footer class="evento-seccion seccion-contacto" id="contacto">
-  <h2 class="seccion-titulo">Contacto y Redes</h2>
+<footer class="site-footer panel-oscuro" id="contacto">
+  <div class="seccion-contenedor">
+    <div class="footer-marca">
+      <img
+        src="/assets/logos/marypepa-logo.png"
+        alt={sitio.nombre}
+        width="44"
+        height="44"
+        class="footer-logo"
+      />
+      <p class="footer-nombre">{sitio.nombre}</p>
+      <p class="footer-tagline">{sitio.tagline}</p>
+    </div>
 
-  <div class="contacto-grid">
-    {evento.contacto.email && (
-      <div class="contacto-bloque">
-        <span class="contacto-label">Correo electrónico</span>
-        <a href={`mailto:${evento.contacto.email}`} class="contacto-link">
-          {evento.contacto.email}
-        </a>
-      </div>
-    )}
-
-    {evento.contacto.instagram && evento.contacto.instagram.length > 0 && (
-      <div class="contacto-bloque">
-        <span class="contacto-label">Instagram oficial</span>
-        <div class="redes-lista">
-          {evento.contacto.instagram.map((ig) => (
-            <a
-              href={ig.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="red-link"
-            >
-              {ig.handle}
-            </a>
-          ))}
+    <div class="contacto-grid">
+      {evento.contacto.email && (
+        <div class="contacto-bloque">
+          <span class="contacto-label">Correo electrónico</span>
+          <a href={`mailto:${evento.contacto.email}`} class="contacto-link">
+            {evento.contacto.email}
+          </a>
         </div>
-      </div>
-    )}
+      )}
+
+      {evento.contacto.instagram && evento.contacto.instagram.length > 0 && (
+        <div class="contacto-bloque">
+          <span class="contacto-label">Instagram oficial</span>
+          <div class="redes-lista">
+            {evento.contacto.instagram.map((ig) => (
+              <a
+                href={ig.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="red-link"
+              >
+                {ig.handle}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+
+    <p class="footer-creditos">{sitio.nombre} &copy; {anio}. Todos los derechos reservados.</p>
   </div>
 </footer>
 
 <style>
-  .evento-seccion {
-    padding: 3rem 0 4rem;
+  .site-footer {
+    padding: 3rem 0 2rem;
   }
 
-  .seccion-titulo {
+  .seccion-contenedor {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .footer-marca {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .footer-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    margin: 0 auto 0.75rem;
+  }
+
+  .footer-nombre {
     font-family: var(--font-display);
-    font-size: clamp(1.75rem, 4vw, 2.25rem);
-    color: var(--accent);
-    line-height: 1.2;
-    margin-bottom: 1.5rem;
     font-style: italic;
     font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--crema);
+  }
+
+  .footer-tagline {
+    font-size: 0.8125rem;
+    color: var(--crema);
+    opacity: 0.75;
+    margin-top: 0.15rem;
   }
 
   .contacto-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(242, 240, 228, 0.15);
+    margin-bottom: 1.5rem;
   }
 
   .contacto-bloque {
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
+    text-align: center;
   }
 
   .contacto-label {
     font-size: 0.6875rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--muted);
+    color: var(--crema);
+    opacity: 0.65;
     font-weight: 500;
   }
 
   .contacto-link {
     font-size: 0.9375rem;
-    color: var(--text);
+    color: var(--crema);
     text-decoration: none;
     border-bottom: 1px solid transparent;
     width: fit-content;
-    transition: border-color 0.15s ease, color 0.15s ease;
+    margin: 0 auto;
+    transition: opacity 0.15s ease;
   }
 
   .contacto-link:hover {
-    color: var(--accent);
-    border-color: var(--accent);
+    opacity: 0.7;
   }
 
   .redes-lista {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 0.6rem 1.25rem;
   }
 
   .red-link {
     font-size: 0.9375rem;
-    color: var(--text);
+    color: var(--crema);
     text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.15s ease, color 0.15s ease;
+    transition: opacity 0.15s ease;
   }
 
   .red-link:hover {
-    color: var(--accent);
-    border-color: var(--accent);
+    opacity: 0.7;
+  }
+
+  .footer-creditos {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--crema);
+    opacity: 0.55;
   }
 
   @media (min-width: 640px) {
-    .evento-seccion {
-      padding: 3.5rem 0 5rem;
+    .site-footer {
+      padding: 4rem 0 2.5rem;
     }
 
     .contacto-grid {
       grid-template-columns: 1fr 1fr;
-      gap: 2rem;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
     }
   }
 </style>
