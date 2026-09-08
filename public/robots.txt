@@ -1,0 +1,3 @@
+# Sitio en construccion: sin indexacion hasta publicar el sitio definitivo.
+User-agent: *
+Disallow: /

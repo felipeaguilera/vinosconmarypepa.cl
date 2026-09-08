@@ -1,0 +1,56 @@
+---
+import Base from './Base.astro';
+import type { EventoData } from '../lib/eventos';
+import EventoHero from '../components/evento/EventoHero.astro';
+import EventoDatos from '../components/evento/EventoDatos.astro';
+import EventoEnologas from '../components/evento/EventoEnologas.astro';
+import EventoEntradas from '../components/evento/EventoEntradas.astro';
+import EventoUbicacion from '../components/evento/EventoUbicacion.astro';
+import EventoContacto from '../components/evento/EventoContacto.astro';
+import EventoCtaMovil from '../components/evento/EventoCtaMovil.astro';
+import sitio from '../data/sitio.json';
+
+interface Props {
+  evento: EventoData;
+  canonical?: string | URL;
+}
+
+const { evento, canonical } = Astro.props;
+
+// Regla de la casa: Cero em dash en textos de cara al usuario
+const pageTitle = `${evento.titulo} | ${sitio.nombre}`;
+const pageDescription = evento.bajada || evento.descripcion || `${evento.titulo} presentado por ${evento.presenta}`;
+---
+
+<Base title={pageTitle} description={pageDescription} canonical={canonical} noindex={true}>
+  <main class="evento-layout container">
+    <!-- 1. Hero -->
+    <EventoHero evento={evento} />
+
+    <!-- 2. Qué es & 3. Qué incluye -->
+    <EventoDatos evento={evento} />
+
+    <!-- 4. Enólogas / Participantes (Tanda 4) -->
+    <EventoEnologas evento={evento} />
+
+    <!-- 5. Entradas y pago (Tanda 3) -->
+    <EventoEntradas evento={evento} />
+
+    <!-- 6. Ubicación y Galería del Lugar (Tanda 4) -->
+    <EventoUbicacion evento={evento} />
+
+    <!-- 7. Contacto -->
+    <EventoContacto evento={evento} />
+
+    <!-- CTA fijo para móvil (solo cuando la venta está activa) -->
+    <EventoCtaMovil evento={evento} />
+  </main>
+</Base>
+
+<style>
+  .evento-layout {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+</style>

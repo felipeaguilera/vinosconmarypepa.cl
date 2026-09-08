@@ -1,0 +1,250 @@
+---
+import type { EventoData } from '../../lib/eventos';
+
+interface Props {
+  evento: EventoData;
+}
+
+const { evento } = Astro.props;
+
+// Degradación automática: Si dice "activo" pero no hay URL, se comporta como "proximamente"
+const estadoEfectivo =
+  evento.pago.estado === 'activo' && !evento.pago.urlLink?.trim()
+    ? 'proximamente'
+    : evento.pago.estado;
+---
+
+<section class="evento-seccion seccion-entradas" id="entradas">
+  <div class="seccion-contenedor">
+    <h2 class="seccion-titulo">Entradas</h2>
+
+    <div
+      class="entradas-tarjeta"
+      id="contenedor-entradas"
+      data-fecha-fin={evento.fecha.fin}
+    >
+      <!-- Bloque de estado compilado / actual -->
+      <div class="estado-actual" id="bloque-estado-actual">
+        {estadoEfectivo === 'proximamente' && (
+          <div class="contenido-estado">
+            {evento.precio.textoVisible && (
+              <p class="precio-destacado">{evento.precio.textoVisible}</p>
+            )}
+            <p class="pago-aviso">La venta de entradas abrirá próximamente.</p>
+            {evento.contacto.email && (
+              <p class="pago-contacto">
+                Para consultas:{' '}
+                <a href={`mailto:${evento.contacto.email}`}>{evento.contacto.email}</a>
+              </p>
+            )}
+          </div>
+        )}
+
+        {estadoEfectivo === 'activo' && (
+          <div class="contenido-estado">
+            {evento.precio.textoVisible && (
+              <p class="precio-destacado">{evento.precio.textoVisible}</p>
+            )}
+            <div class="cta-contenedor">
+              <a
+                href={evento.pago.urlLink}
+                class="btn-compra"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {evento.pago.textoBoton || 'Compra tu entrada'}
+              </a>
+            </div>
+            {evento.contacto.email && (
+              <p class="pago-contacto">
+                Consultas sobre tu entrada:{' '}
+                <a href={`mailto:${evento.contacto.email}`}>{evento.contacto.email}</a>
+              </p>
+            )}
+          </div>
+        )}
+
+        {estadoEfectivo === 'agotado' && (
+          <div class="contenido-estado">
+            {evento.precio.textoVisible && (
+              <p class="precio-destacado">{evento.precio.textoVisible}</p>
+            )}
+            <p class="pago-aviso badge-agotado">Entradas agotadas</p>
+            <p class="pago-detalle">Los cupos para este evento se encuentran completos.</p>
+            {evento.contacto.email && (
+              <p class="pago-contacto">
+                Para consultas:{' '}
+                <a href={`mailto:${evento.contacto.email}`}>{evento.contacto.email}</a>
+              </p>
+            )}
+          </div>
+        )}
+
+        {estadoEfectivo === 'cerrado' && (
+          <div class="contenido-estado">
+            <p class="pago-aviso">La venta de entradas para este evento ha finalizado.</p>
+            {evento.contacto.email && (
+              <p class="pago-contacto">
+                Para consultas:{' '}
+                <a href={`mailto:${evento.contacto.email}`}>{evento.contacto.email}</a>
+              </p>
+            )}
+          </div>
+        )}
+      </div>
+
+      <!-- Bloque de evento pasado (renderizado en el markup estático, oculto por defecto) -->
+      <div class="estado-pasado" id="bloque-estado-pasado" style="display: none;">
+        <div class="contenido-estado">
+          <p class="pago-aviso">Este evento ya se realizó.</p>
+          {evento.contacto.email && (
+            <p class="pago-contacto">
+              Para consultas o contacto:{' '}
+              <a href={`mailto:${evento.contacto.email}`}>{evento.contacto.email}</a>
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function verificarFechaEvento() {
+    const contenedor = document.getElementById('contenedor-entradas');
+    if (!contenedor) return;
+
+    const fechaFinStr = contenedor.getAttribute('data-fecha-fin');
+    if (!fechaFinStr) return;
+
+    const fechaFin = new Date(fechaFinStr);
+    if (!isNaN(fechaFin.getTime()) && Date.now() > fechaFin.getTime()) {
+      const bloqueActual = document.getElementById('bloque-estado-actual');
+      const bloquePasado = document.getElementById('bloque-estado-pasado');
+      const ctaMovil = document.getElementById('cta-movil');
+
+      if (bloqueActual) bloqueActual.style.display = 'none';
+      if (bloquePasado) bloquePasado.style.display = 'block';
+      if (ctaMovil) ctaMovil.style.display = 'none';
+    }
+  }
+
+  verificarFechaEvento();
+</script>
+
+<style>
+  .evento-seccion {
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .seccion-contenedor {
+    max-width: 580px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .seccion-titulo {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    color: var(--accent);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  .entradas-tarjeta {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2.25rem 1.5rem;
+    text-align: center;
+  }
+
+  .contenido-estado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .precio-destacado {
+    font-size: 2.25rem;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1.1;
+    margin-bottom: 0.25rem;
+  }
+
+  .pago-aviso {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .badge-agotado {
+    display: inline-block;
+    background: var(--accent-lt);
+    color: var(--accent);
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+
+  .pago-detalle {
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  .cta-contenedor {
+    margin: 0.5rem 0;
+    width: 100%;
+  }
+
+  .btn-compra {
+    display: inline-block;
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.875rem 2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+    width: 100%;
+    max-width: 320px;
+    box-sizing: border-box;
+  }
+
+  .btn-compra:hover {
+    background: #6e0000;
+  }
+
+  .pago-contacto {
+    font-size: 0.875rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+  }
+
+  .pago-contacto a {
+    color: var(--text);
+    text-decoration: underline;
+    transition: color 0.15s ease;
+  }
+
+  .pago-contacto a:hover {
+    color: var(--accent);
+  }
+
+  @media (min-width: 640px) {
+    .evento-seccion {
+      padding: 3.5rem 0;
+    }
+
+    .entradas-tarjeta {
+      padding: 2.75rem 2rem;
+    }
+  }
+</style>

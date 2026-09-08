@@ -1,0 +1,22 @@
+---
+import Evento from '../../layouts/Evento.astro';
+import { getEventosPublicados, type EventoData } from '../../lib/eventos';
+
+export async function getStaticPaths() {
+  const eventos = getEventosPublicados();
+
+  return eventos.map((evento) => ({
+    params: { slug: evento.slug },
+    props: { evento },
+  }));
+}
+
+interface Props {
+  evento: EventoData;
+}
+
+const { evento } = Astro.props;
+const canonical = new URL(`/feria/${evento.slug}`, Astro.site);
+---
+
+<Evento evento={evento} canonical={canonical} />

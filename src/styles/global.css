@@ -1,0 +1,65 @@
+/* Tokens y base del sitio. Los colores salen de la presentacion del podcast.
+   Paleta a confirmar cuando llegue el brief visual completo. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --accent: #880000;
+  --accent-lt: #f7edef;
+  --bg: #fafaf7;
+  --surface: #f2eee8;
+  --text: #1a1a1a;
+  --muted: #6b6b6b;
+  --border: #e4ded4;
+
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Poppins', system-ui, sans-serif;
+
+  --maxw: 740px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Utilidad para texto solo lector de pantalla */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

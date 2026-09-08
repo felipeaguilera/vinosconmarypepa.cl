@@ -1,0 +1,12 @@
+{
+  "nombre": "Vinos con Marypepa",
+  "tagline": "Un proyecto de María Paz Jiménez",
+  "estado": "Sitio en construcción",
+  "contacto": {
+    "instagram": {
+      "handle": "@mariapazjimenezvino",
+      "url": "https://instagram.com/mariapazjimenezvino"
+    },
+    "email": "mariapaz@mariapazjimenez.cl"
+  }
+}

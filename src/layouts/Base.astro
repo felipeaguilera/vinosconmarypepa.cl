@@ -1,0 +1,53 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string | URL;
+  /** Clase extra para el body, util para layouts centrados como el coming soon */
+  bodyClass?: string;
+  /** Bloquea indexacion mientras el sitio esta en construccion */
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = 'Vinos con Marypepa, un proyecto de María Paz Jiménez.',
+  canonical: customCanonical,
+  bodyClass = '',
+  noindex = false,
+} = Astro.props;
+
+const canonical = customCanonical
+  ? (customCanonical instanceof URL ? customCanonical : new URL(customCanonical, Astro.site))
+  : new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="es_CL" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class={bodyClass}>
+    <slot />
+  </body>
+</html>

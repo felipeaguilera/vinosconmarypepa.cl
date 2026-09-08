@@ -1,0 +1,102 @@
+---
+import type { EventoData } from '../../lib/eventos';
+
+interface Props {
+  evento: EventoData;
+}
+
+const { evento } = Astro.props;
+
+// El CTA fijo solo se emite cuando la venta está efectivamente activa con URL válida
+const esVentaActiva = evento.pago.estado === 'activo' && Boolean(evento.pago.urlLink?.trim());
+---
+
+{esVentaActiva && (
+  <div class="cta-movil-bar" id="cta-movil">
+    <div class="cta-movil-contenido">
+      {evento.precio.textoVisible && (
+        <div class="cta-movil-precio">
+          <span class="precio-label">Total</span>
+          <span class="precio-valor">{evento.precio.textoVisible}</span>
+        </div>
+      )}
+      <a
+        href={evento.pago.urlLink}
+        class="cta-movil-boton"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {evento.pago.textoBoton || 'Compra tu entrada'}
+      </a>
+    </div>
+  </div>
+)}
+
+<style>
+  .cta-movil-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(250, 250, 247, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-top: 1px solid var(--border);
+    padding: 0.75rem 1.25rem;
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+  }
+
+  .cta-movil-contenido {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 500px;
+    margin: 0 auto;
+    gap: 1rem;
+  }
+
+  .cta-movil-precio {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .precio-label {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .precio-valor {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1.1;
+  }
+
+  .cta-movil-boton {
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    padding: 0.65rem 1.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+    flex-shrink: 0;
+    text-align: center;
+    transition: background-color 0.15s ease;
+  }
+
+  .cta-movil-boton:hover {
+    background: #6e0000;
+  }
+
+  @media (min-width: 640px) {
+    .cta-movil-bar {
+      display: none;
+    }
+  }
+</style>

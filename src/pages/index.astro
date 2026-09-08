@@ -1,0 +1,132 @@
+---
+import Base from '../layouts/Base.astro';
+import Evento from '../layouts/Evento.astro';
+import { getEventoDestacado } from '../lib/eventos';
+import sitio from '../data/sitio.json';
+
+const eventoDestacado = getEventoDestacado();
+const canonical = eventoDestacado
+  ? new URL(`/feria/${eventoDestacado.slug}`, Astro.site)
+  : new URL('/', Astro.site);
+
+const comingSoonTitle = `${sitio.nombre} | Próximamente`;
+---
+
+{
+  eventoDestacado ? (
+    <Evento evento={eventoDestacado} canonical={canonical} />
+  ) : (
+    <Base title={comingSoonTitle} description="Sitio en construcción." bodyClass="coming-soon" canonical={canonical} noindex={true}>
+      <main class="card">
+        <p class="wordmark">{sitio.nombre}</p>
+        <p class="tagline">{sitio.tagline}</p>
+
+        <div class="status">
+          <span class="dot" aria-hidden="true"></span>
+          {sitio.estado}
+        </div>
+
+        <div class="contact">
+          <p>
+            <span class="label">Instagram</span>
+            <a href={sitio.contacto.instagram.url} target="_blank" rel="noopener">
+              {sitio.contacto.instagram.handle}
+            </a>
+          </p>
+          <p>
+            <span class="label">Email</span>
+            <a href={`mailto:${sitio.contacto.email}`}>{sitio.contacto.email}</a>
+          </p>
+        </div>
+      </main>
+    </Base>
+  )
+}
+
+<style is:global>
+  html,
+  body.coming-soon {
+    height: 100%;
+  }
+
+  body.coming-soon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1.5rem;
+  }
+</style>
+
+<style>
+  .card {
+    text-align: center;
+    max-width: 480px;
+  }
+
+  .wordmark {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: clamp(2rem, 7vw, 3rem);
+    line-height: 1.15;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .tagline {
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.8125rem;
+    color: var(--text);
+    margin-bottom: 2.5rem;
+  }
+
+  .status .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  .contact a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s ease;
+  }
+
+  .contact a:hover {
+    border-color: var(--accent);
+  }
+
+  .contact .label {
+    color: var(--muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-right: 0.5rem;
+  }
+</style>

@@ -1,0 +1,40 @@
+{
+  "_nota": "Plantilla de datos para una pagina de evento. Copiar a evento.json y completar cuando lleguen los detalles de Maria Paz. Ver SPEC.md.",
+  "slug": "nombre-del-evento",
+  "titulo": "",
+  "bajada": "",
+  "descripcion": "",
+  "fecha": {
+    "inicio": "2026-00-00T19:00:00-04:00",
+    "fin": "2026-00-00T22:00:00-04:00",
+    "textoVisible": ""
+  },
+  "lugar": {
+    "nombre": "",
+    "direccion": "",
+    "comuna": "",
+    "ciudad": "Santiago",
+    "coordenadas": { "lat": null, "lng": null },
+    "urlMapa": ""
+  },
+  "cupos": null,
+  "precio": {
+    "monto": null,
+    "moneda": "CLP",
+    "textoVisible": ""
+  },
+  "pago": {
+    "proveedor": "mercadopago",
+    "urlLink": "",
+    "_opciones": ["mercadopago", "transbank", "transferencia"]
+  },
+  "contactoEvento": {
+    "email": "mariapaz@mariapazjimenez.cl",
+    "whatsapp": ""
+  },
+  "imagenes": {
+    "flyer": "",
+    "og": ""
+  },
+  "publicado": false
+}

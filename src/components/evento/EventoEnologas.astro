@@ -1,0 +1,244 @@
+---
+import type { EventoData } from '../../lib/eventos';
+
+interface Props {
+  evento: EventoData;
+}
+
+const { evento } = Astro.props;
+---
+
+{evento.participantes && evento.participantes.length > 0 && (
+  <section class="evento-seccion seccion-enologas" id="enologas">
+    <div class="seccion-contenedor">
+      <h2 class="seccion-titulo">Enólogas y Productoras</h2>
+      <p class="seccion-bajada">Conoce a las mujeres detrás de los vinos de esta edición.</p>
+
+      <div class="grilla-enologas">
+        {evento.participantes.map((p) => {
+          const tieneFoto = Boolean(p.foto && p.foto.trim());
+          const tieneWeb = Boolean(p.web && p.web.trim());
+          const tieneIg = Boolean(p.instagram && p.instagram.trim());
+          const igUrl = tieneIg
+            ? (p.instagram.startsWith('http')
+                ? p.instagram
+                : `https://instagram.com/${p.instagram.replace('@', '')}`)
+            : null;
+
+          const urlDestino = tieneWeb ? p.web : igUrl;
+          const textoBadge = tieneWeb ? 'Sitio web' : (tieneIg ? p.instagram : null);
+
+          return urlDestino ? (
+            <a
+              href={urlDestino}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="tarjeta-enologa es-link"
+            >
+              {tieneFoto ? (
+                <div class="marco-foto">
+                  <img
+                    src={p.foto}
+                    alt={`${p.nombre}, ${p.vina}`}
+                    loading="lazy"
+                    class="enologa-img"
+                  />
+                </div>
+              ) : (
+                <div class="marco-foto marco-tipografico">
+                  <h3 class="enologa-nombre-display">{p.nombre}</h3>
+                </div>
+              )}
+              <div class="enologa-info">
+                {tieneFoto && <h3 class="enologa-nombre">{p.nombre}</h3>}
+                <p class="enologa-vina">{p.vina}</p>
+                {p.cargo && <p class="enologa-cargo">{p.cargo}</p>}
+                {textoBadge && <span class="enologa-ig-badge">{textoBadge} &rarr;</span>}
+              </div>
+            </a>
+          ) : (
+            <article class="tarjeta-enologa">
+              {tieneFoto ? (
+                <div class="marco-foto">
+                  <img
+                    src={p.foto}
+                    alt={`${p.nombre}, ${p.vina}`}
+                    loading="lazy"
+                    class="enologa-img"
+                  />
+                </div>
+              ) : (
+                <div class="marco-foto marco-tipografico">
+                  <h3 class="enologa-nombre-display">{p.nombre}</h3>
+                </div>
+              )}
+              <div class="enologa-info">
+                {tieneFoto && <h3 class="enologa-nombre">{p.nombre}</h3>}
+                <p class="enologa-vina">{p.vina}</p>
+                {p.cargo && <p class="enologa-cargo">{p.cargo}</p>}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .evento-seccion {
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .seccion-contenedor {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .seccion-titulo {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    color: var(--accent);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  .seccion-bajada {
+    font-size: 0.9375rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .grilla-enologas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 1.5rem 1.25rem;
+    text-align: left;
+  }
+
+  .tarjeta-enologa {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .tarjeta-enologa.es-link:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 6px 16px rgba(136, 0, 0, 0.08);
+  }
+
+  .marco-foto {
+    aspect-ratio: 2/3;
+    width: 100%;
+    overflow: hidden;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .marco-tipografico {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background: var(--surface);
+  }
+
+  .enologa-nombre-display {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 3.5vw, 1.45rem);
+    font-style: italic;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.25;
+    word-break: break-word;
+    letter-spacing: -0.01em;
+    transition: color 0.15s ease;
+  }
+
+  .tarjeta-enologa.es-link:hover .enologa-nombre-display {
+    color: var(--accent);
+  }
+
+  .enologa-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.2s ease;
+  }
+
+  .tarjeta-enologa.es-link:hover .enologa-img {
+    transform: scale(1.02);
+  }
+
+  .enologa-info {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex-grow: 1;
+    background: var(--surface);
+  }
+
+  .enologa-nombre {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+    word-break: break-word;
+  }
+
+  .enologa-vina {
+    font-size: 0.8125rem;
+    color: var(--accent);
+    font-weight: 500;
+    line-height: 1.35;
+    word-break: break-word;
+  }
+
+  .enologa-cargo {
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.35;
+    margin-top: 0.15rem;
+  }
+
+  .enologa-ig-badge {
+    font-size: 0.6875rem;
+    color: var(--muted);
+    font-weight: 500;
+    margin-top: auto;
+    padding-top: 0.5rem;
+    display: inline-block;
+  }
+
+  .tarjeta-enologa.es-link:hover .enologa-ig-badge {
+    color: var(--accent);
+  }
+
+  @media (min-width: 640px) {
+    .evento-seccion {
+      padding: 4rem 0;
+    }
+
+    .grilla-enologas {
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 1.75rem 1.5rem;
+    }
+  }
+</style>

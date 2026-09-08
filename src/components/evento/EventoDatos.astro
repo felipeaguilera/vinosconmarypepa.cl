@@ -1,0 +1,172 @@
+---
+import type { EventoData } from '../../lib/eventos';
+
+interface Props {
+  evento: EventoData;
+}
+
+const { evento } = Astro.props;
+
+const tieneQueEs = Boolean(evento.bajada?.trim() || evento.descripcion?.trim());
+const tieneIncluye = Boolean(evento.precio?.incluye && evento.precio.incluye.length > 0);
+const tieneRestricciones = Boolean(evento.restricciones && evento.restricciones.length > 0);
+
+// Separa párrafos en descripcion por saltos de línea dobles o simples
+const parrafosDescripcion = evento.descripcion
+  ? evento.descripcion
+      .split(/\n\s*\n/)
+      .map((p) => p.trim())
+      .filter(Boolean)
+  : [];
+---
+
+{tieneQueEs && (
+  <section class="evento-seccion seccion-que-es" id="que-es">
+    <div class="seccion-contenedor">
+      <h2 class="seccion-titulo">Acerca del evento</h2>
+      {evento.bajada && <p class="texto-bajada">{evento.bajada}</p>}
+      <div class="descripcion-bloque">
+        {parrafosDescripcion.map((parrafo) => (
+          <p class="texto-descripcion">{parrafo}</p>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{(tieneIncluye || tieneRestricciones) && (
+  <section class="evento-seccion seccion-que-incluye" id="que-incluye">
+    <div class="seccion-contenedor">
+      <h2 class="seccion-titulo">Qué incluye la entrada</h2>
+
+      {tieneIncluye && (
+        <ul class="lista-incluye">
+          {evento.precio.incluye.map((item) => (
+            <li class="item-incluye">
+              <span class="check-icono" aria-hidden="true">&#10003;</span>
+              <span class="item-texto">{item}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {tieneRestricciones && (
+        <div class="bloque-restricciones">
+          <h3 class="restricciones-titulo">Información importante</h3>
+          <ul class="lista-restricciones">
+            {evento.restricciones.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+<style>
+  .evento-seccion {
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .seccion-contenedor {
+    max-width: 580px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .seccion-titulo {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    color: var(--accent);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  .texto-bajada {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 1.25rem;
+    text-align: center;
+  }
+
+  .descripcion-bloque {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .texto-descripcion {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .lista-incluye {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 2rem;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    text-align: left;
+  }
+
+  .item-incluye {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .check-icono {
+    color: var(--accent);
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .bloque-restricciones {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    text-align: left;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  .restricciones-titulo {
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    text-align: center;
+  }
+
+  .lista-restricciones {
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.875rem;
+    color: var(--text);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  @media (min-width: 640px) {
+    .evento-seccion {
+      padding: 3.5rem 0;
+    }
+  }
+</style>

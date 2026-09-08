@@ -1,0 +1,149 @@
+{
+  "slug": "woman-wine",
+  "destacado": true,
+  "publicado": true,
+  "titulo": "Woman Wine",
+  "serie": "Club Label",
+  "presenta": "Vinos con Marypepa",
+  "bajada": "",
+  "descripcion": "",
+  "fecha": {
+    "inicio": "2026-10-24T19:00:00-03:00",
+    "fin": "2026-10-24T23:00:00-03:00",
+    "textoVisible": "Sábado 24 de octubre, 19:00 a 23:00 hrs"
+  },
+  "lugar": {
+    "nombre": "Hotel W Santiago",
+    "detalle": "Restaurante Noso, 4to piso",
+    "direccion": "",
+    "comuna": "",
+    "ciudad": "Santiago",
+    "urlMapa": "",
+    "fotos": [
+      { "archivo": "/assets/locacion/noso-salon-01.jpg", "alt": "Salón del evento con mesas dispuestas" },
+      { "archivo": "/assets/locacion/terraza-noche-01.jpg", "alt": "Espacio al aire libre de noche con vista a la ciudad" },
+      { "archivo": "/assets/locacion/terraza-mesa-02.jpg", "alt": "Mesa dispuesta con copas de degustación" },
+      { "archivo": "/assets/locacion/terraza-butacas-03.jpg", "alt": "Zona de descanso y butacas con vista panorámica" },
+      { "archivo": "/assets/locacion/terraza-vista-04.jpg", "alt": "Vista panorámica de la ciudad desde el recinto" }
+    ]
+  },
+  "precio": {
+    "monto": 70000,
+    "moneda": "CLP",
+    "textoVisible": "$70.000",
+    "incluye": [
+      "Copa",
+      "Degustaciones ilimitadas",
+      "Estaciones de gastronomía de Noso"
+    ]
+  },
+  "pago": {
+    "proveedor": "webpay",
+    "estado": "proximamente",
+    "urlLink": "",
+    "textoBoton": "Compra tu entrada"
+  },
+  "restricciones": [
+    "Evento exclusivo para mayores de 18 años",
+    "No se permite el ingreso de mascotas",
+    "Feria en formato de pie, sin asientos asignados"
+  ],
+  "participantes": [
+    {
+      "vina": "Atypical Wines",
+      "nombre": "Patricia Rodríguez",
+      "cargo": "Propietaria y enóloga",
+      "foto": "",
+      "instagram": ""
+    },
+    {
+      "vina": "Bodega Volcanes",
+      "nombre": "María del Pilar Díaz",
+      "cargo": "Enóloga",
+      "foto": "",
+      "instagram": ""
+    },
+    {
+      "vina": "Buena Esperanza",
+      "nombre": "Maine Chang",
+      "cargo": "Propietaria",
+      "foto": "",
+      "instagram": ""
+    },
+    {
+      "vina": "Carmen",
+      "nombre": "Ana María Cumsille",
+      "cargo": "",
+      "foto": "",
+      "instagram": ""
+    },
+    {
+      "vina": "Cousiño Macul",
+      "nombre": "Rosario Palma",
+      "cargo": "Enóloga",
+      "foto": "",
+      "instagram": ""
+    },
+    {
+      "vina": "Estación Yumbel",
+      "nombre": "Daniela Tapia",
+      "cargo": "Propietaria y enóloga",
+      "foto": "",
+      "instagram": ""
+    },
+    {
+      "vina": "Javiera Ortúzar Wines",
+      "nombre": "Javiera Ortúzar",
+      "cargo": "Propietaria y enóloga",
+      "foto": "",
+      "instagram": ""
+    },
+    {
+      "vina": "La Rosa",
+      "nombre": "Cynthia Ortiz",
+      "cargo": "Enóloga",
+      "foto": "",
+      "instagram": ""
+    },
+    {
+      "vina": "Las Niñas",
+      "nombre": "Valentina Olmedo",
+      "cargo": "Enóloga",
+      "foto": "",
+      "instagram": ""
+    },
+    {
+      "vina": "López Pangue",
+      "nombre": "Paula Cárdenas",
+      "cargo": "Enóloga",
+      "foto": "",
+      "instagram": ""
+    },
+    {
+      "vina": "Umpel",
+      "nombre": "Claudia Lastra",
+      "cargo": "",
+      "foto": "",
+      "instagram": ""
+    },
+    {
+      "vina": "Viñedos Alcohuaz",
+      "nombre": "Rosario Fillol",
+      "cargo": "Enóloga",
+      "foto": "",
+      "instagram": ""
+    }
+  ],
+  "contacto": {
+    "email": "marypepa1974@gmail.com",
+    "instagram": [
+      { "handle": "@vinosconmarypepa", "url": "https://instagram.com/vinosconmarypepa" },
+      { "handle": "@mariapazjimenezvino", "url": "https://instagram.com/mariapazjimenezvino" },
+      { "handle": "@wsantiago", "url": "https://instagram.com/wsantiago" }
+    ]
+  },
+  "imagenes": {
+    "hero": "",
+    "og": ""
+  }
+}

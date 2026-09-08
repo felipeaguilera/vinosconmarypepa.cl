@@ -1,0 +1,122 @@
+---
+import type { EventoData } from '../../lib/eventos';
+
+interface Props {
+  evento: EventoData;
+}
+
+const { evento } = Astro.props;
+---
+
+<footer class="evento-seccion seccion-contacto" id="contacto">
+  <h2 class="seccion-titulo">Contacto y Redes</h2>
+
+  <div class="contacto-grid">
+    {evento.contacto.email && (
+      <div class="contacto-bloque">
+        <span class="contacto-label">Correo electrónico</span>
+        <a href={`mailto:${evento.contacto.email}`} class="contacto-link">
+          {evento.contacto.email}
+        </a>
+      </div>
+    )}
+
+    {evento.contacto.instagram && evento.contacto.instagram.length > 0 && (
+      <div class="contacto-bloque">
+        <span class="contacto-label">Instagram oficial</span>
+        <div class="redes-lista">
+          {evento.contacto.instagram.map((ig) => (
+            <a
+              href={ig.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="red-link"
+            >
+              {ig.handle}
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+</footer>
+
+<style>
+  .evento-seccion {
+    padding: 3rem 0 4rem;
+  }
+
+  .seccion-titulo {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    color: var(--accent);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  .contacto-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .contacto-bloque {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .contacto-label {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .contacto-link {
+    font-size: 0.9375rem;
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    width: fit-content;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .contacto-link:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .redes-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.25rem;
+  }
+
+  .red-link {
+    font-size: 0.9375rem;
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .red-link:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  @media (min-width: 640px) {
+    .evento-seccion {
+      padding: 3.5rem 0 5rem;
+    }
+
+    .contacto-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+  }
+</style>
