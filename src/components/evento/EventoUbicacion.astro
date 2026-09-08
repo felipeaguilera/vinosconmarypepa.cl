@@ -9,11 +9,33 @@ const { evento } = Astro.props;
 
 const ciudadComuna = [evento.lugar.comuna, evento.lugar.ciudad].filter(Boolean).join(', ');
 const fotosLugar = evento.lugar.fotos && evento.lugar.fotos.length > 0 ? evento.lugar.fotos : [];
+const fotoPrincipal = fotosLugar[0];
+const fotosGaleria = fotosLugar.slice(1);
+const tieneLogo = Boolean(evento.lugar.logo && evento.lugar.logo.trim());
 ---
 
 <section class="evento-seccion seccion-ubicacion" id="ubicacion">
   <div class="seccion-contenedor">
     <h2 class="seccion-titulo">Ubicación</h2>
+
+    {fotoPrincipal && (
+      <figure class="foto-principal">
+        <img
+          src={fotoPrincipal.archivo}
+          alt={fotoPrincipal.alt}
+          loading="lazy"
+          class="foto-principal-img"
+        />
+        {tieneLogo && (
+          <img
+            src={evento.lugar.logo}
+            alt=""
+            aria-hidden="true"
+            class="foto-principal-logo"
+          />
+        )}
+      </figure>
+    )}
 
     <div class="tarjeta-ubicacion">
       <div class="ubicacion-info">
@@ -37,9 +59,9 @@ const fotosLugar = evento.lugar.fotos && evento.lugar.fotos.length > 0 ? evento.
       )}
     </div>
 
-    {fotosLugar.length > 0 && (
-      <div class={`galeria-lugar ${fotosLugar.length === 1 ? 'una-foto' : ''}`}>
-        {fotosLugar.map((foto) => (
+    {fotosGaleria.length > 0 && (
+      <div class={`galeria-lugar ${fotosGaleria.length === 1 ? 'una-foto' : ''}`}>
+        {fotosGaleria.map((foto) => (
           <figure class="foto-item">
             <img
               src={foto.archivo}
@@ -74,6 +96,34 @@ const fotosLugar = evento.lugar.fotos && evento.lugar.fotos.length > 0 ? evento.
     margin-bottom: 1.5rem;
     font-style: italic;
     font-weight: 600;
+  }
+
+  /* Foto principal que identifica el recinto */
+  .foto-principal {
+    position: relative;
+    margin: 0 0 1.5rem;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .foto-principal-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .foto-principal-logo {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    height: 2rem;
+    width: auto;
+    filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.35)) invert(1) brightness(2);
   }
 
   .tarjeta-ubicacion {
@@ -141,24 +191,24 @@ const fotosLugar = evento.lugar.fotos && evento.lugar.fotos.length > 0 ? evento.
     color: var(--accent);
   }
 
-  /* Galería del Lugar */
+  /* Mini galería del lugar (el resto de las fotos, bajo la principal) */
   .galeria-lugar {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
     margin-top: 1.5rem;
   }
 
   .galeria-lugar.una-foto {
     grid-template-columns: 1fr;
-    max-width: 580px;
+    max-width: 380px;
     margin-left: auto;
     margin-right: auto;
   }
 
   .foto-item {
     margin: 0;
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
     border-radius: 8px;
     border: 1px solid var(--border);
@@ -183,6 +233,10 @@ const fotosLugar = evento.lugar.fotos && evento.lugar.fotos.length > 0 ? evento.
       padding: 3.5rem 0;
     }
 
+    .foto-principal {
+      aspect-ratio: 21 / 9;
+    }
+
     .tarjeta-ubicacion {
       flex-direction: row;
       align-items: center;
@@ -196,8 +250,7 @@ const fotosLugar = evento.lugar.fotos && evento.lugar.fotos.length > 0 ? evento.
     }
 
     .galeria-lugar {
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1.25rem;
+      gap: 1rem;
     }
   }
 </style>

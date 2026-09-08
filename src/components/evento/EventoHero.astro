@@ -8,52 +8,95 @@ interface Props {
 const { evento } = Astro.props;
 
 const lugarCompleto = [evento.lugar.nombre, evento.lugar.detalle].filter(Boolean).join(', ');
+const tieneFondo = Boolean(evento.imagenes.hero && evento.imagenes.hero.trim());
 ---
 
-<header class="evento-hero" id="hero">
-  <div class="hero-eyebrow">
-    {evento.serie && <span class="serie">{evento.serie}</span>}
-    {evento.serie && evento.presenta && <span class="separador" aria-hidden="true">·</span>}
-    {evento.presenta && <span class="presenta">Presenta {evento.presenta}</span>}
-  </div>
+<header class={`evento-hero ${tieneFondo ? 'con-fondo' : ''}`} id="hero">
+  {tieneFondo && (
+    <div class="hero-fondo" style={`background-image: url(${evento.imagenes.hero})`}>
+      <div class="hero-velo" aria-hidden="true"></div>
+    </div>
+  )}
 
-  <h1 class="hero-titulo">{evento.titulo}</h1>
+  <div class="hero-contenido">
+    <div class="hero-eyebrow">
+      {evento.serie && <span class="serie">{evento.serie}</span>}
+      {evento.serie && evento.presenta && <span class="separador" aria-hidden="true">·</span>}
+      {evento.presenta && <span class="presenta">Presenta {evento.presenta}</span>}
+    </div>
 
-  <div class="hero-datos-clave">
-    {evento.fecha.textoVisible && (
-      <div class="dato-item">
-        <span class="dato-label">Fecha y hora</span>
-        <span class="dato-valor">{evento.fecha.textoVisible}</span>
-      </div>
-    )}
+    <h1 class="hero-titulo">{evento.titulo}</h1>
 
-    {lugarCompleto && (
-      <div class="dato-item">
-        <span class="dato-label">Lugar</span>
-        <span class="dato-valor">{lugarCompleto}</span>
-      </div>
-    )}
+    {evento.bajada && <p class="hero-bajada">{evento.bajada}</p>}
 
-    {evento.precio.textoVisible && (
-      <div class="dato-item dato-precio">
-        <span class="dato-label">Entrada general</span>
-        <span class="dato-valor valor-precio">{evento.precio.textoVisible}</span>
-      </div>
-    )}
-  </div>
+    <div class="hero-datos-clave">
+      {evento.fecha.textoVisible && (
+        <div class="dato-item">
+          <span class="dato-label">Fecha y hora</span>
+          <span class="dato-valor">{evento.fecha.textoVisible}</span>
+        </div>
+      )}
 
-  <div class="hero-scroll-hint">
-    <a href="#entradas" class="hero-link-entradas">
-      Ver detalles y entradas &darr;
-    </a>
+      {lugarCompleto && (
+        <div class="dato-item">
+          <span class="dato-label">Lugar</span>
+          <span class="dato-valor">{lugarCompleto}</span>
+        </div>
+      )}
+
+      {evento.precio.textoVisible && (
+        <div class="dato-item dato-precio">
+          <span class="dato-label">Entrada general</span>
+          <span class="dato-valor valor-precio">{evento.precio.textoVisible}</span>
+        </div>
+      )}
+    </div>
+
+    <div class="hero-scroll-hint">
+      <a href="#entradas" class="hero-link-entradas">
+        Ver detalles y entradas &darr;
+      </a>
+    </div>
   </div>
 </header>
 
 <style>
   .evento-hero {
+    position: relative;
     padding: 2.5rem 0 2rem;
     text-align: center;
     border-bottom: 1px solid var(--border);
+  }
+
+  .evento-hero.con-fondo {
+    padding: 3.5rem 1.5rem 2.75rem;
+    border-bottom: none;
+    color: var(--crema);
+    overflow: hidden;
+  }
+
+  .hero-fondo {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 65%;
+    z-index: 0;
+  }
+
+  .hero-velo {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(15, 10, 9, 0.78) 0%,
+      rgba(20, 8, 8, 0.72) 45%,
+      rgba(10, 6, 6, 0.88) 100%
+    );
+  }
+
+  .hero-contenido {
+    position: relative;
+    z-index: 1;
   }
 
   .hero-eyebrow {
@@ -64,13 +107,23 @@ const lugarCompleto = [evento.lugar.nombre, evento.lugar.detalle].filter(Boolean
     font-size: 0.75rem;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     color: var(--muted);
     margin-bottom: 0.75rem;
   }
 
+  .con-fondo .hero-eyebrow {
+    color: var(--crema);
+    opacity: 0.85;
+  }
+
   .hero-eyebrow .separador {
     color: var(--border);
+  }
+
+  .con-fondo .hero-eyebrow .separador {
+    color: var(--crema);
+    opacity: 0.4;
   }
 
   .hero-titulo {
@@ -80,8 +133,26 @@ const lugarCompleto = [evento.lugar.nombre, evento.lugar.detalle].filter(Boolean
     font-size: clamp(2.5rem, 8vw, 4.25rem);
     line-height: 1.08;
     color: var(--accent);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     letter-spacing: -0.01em;
+  }
+
+  .con-fondo .hero-titulo {
+    color: var(--crema);
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  .hero-bajada {
+    max-width: 480px;
+    margin: 0 auto 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  .con-fondo .hero-bajada {
+    color: var(--crema);
+    opacity: 0.92;
   }
 
   .hero-datos-clave {
@@ -95,6 +166,12 @@ const lugarCompleto = [evento.lugar.nombre, evento.lugar.detalle].filter(Boolean
     max-width: 540px;
     margin: 0 auto 1.5rem;
     text-align: left;
+  }
+
+  .con-fondo .hero-datos-clave {
+    background: rgba(250, 250, 247, 0.97);
+    border-color: rgba(250, 250, 247, 0.2);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
   }
 
   .dato-item {
@@ -139,14 +216,29 @@ const lugarCompleto = [evento.lugar.nombre, evento.lugar.detalle].filter(Boolean
     transition: color 0.15s ease, background-color 0.15s ease;
   }
 
+  .con-fondo .hero-link-entradas {
+    color: var(--crema);
+    opacity: 0.85;
+  }
+
   .hero-link-entradas:hover {
     color: var(--accent);
     background-color: var(--accent-lt);
   }
 
+  .con-fondo .hero-link-entradas:hover {
+    color: var(--crema);
+    opacity: 1;
+    background-color: rgba(250, 250, 247, 0.12);
+  }
+
   @media (min-width: 640px) {
     .evento-hero {
       padding: 3.5rem 0 3rem;
+    }
+
+    .evento-hero.con-fondo {
+      padding: 5rem 1.5rem 3.5rem;
     }
 
     .hero-datos-clave {

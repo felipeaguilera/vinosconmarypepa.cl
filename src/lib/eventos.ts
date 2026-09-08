@@ -39,6 +39,7 @@ export interface EventoData {
     ciudad: string;
     urlMapa: string;
     fotos?: FotoLugar[];
+    logo?: string;
   };
   precio: {
     monto: number | null;

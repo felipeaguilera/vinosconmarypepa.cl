@@ -2,11 +2,11 @@
   "slug": "woman-wine",
   "destacado": true,
   "publicado": true,
-  "titulo": "Woman Wine",
-  "serie": "Club Label",
+  "titulo": "Club Label Woman Wine",
+  "serie": "Feria de vinos",
   "presenta": "Vinos con Marypepa",
-  "bajada": "",
-  "descripcion": "",
+  "bajada": "Te invita a la primera feria solo con enólogas mujeres.",
+  "descripcion": "Conoce a las enólogas que están dando que hablar en la industria del vino chileno.",
   "fecha": {
     "inicio": "2026-10-24T19:00:00-03:00",
     "fin": "2026-10-24T23:00:00-03:00",
@@ -30,17 +30,14 @@
       },
       {
         "archivo": "/assets/locacion/terraza-mesa-02.jpg",
-        "alt": "Mesa dispuesta con copas de degustación"
-      },
-      {
-        "archivo": "/assets/locacion/terraza-butacas-03.jpg",
-        "alt": "Zona de descanso y butacas con vista panorámica"
+        "alt": "Montaje de sillas y centros de flores en la Terraza"
       },
       {
         "archivo": "/assets/locacion/terraza-vista-04.jpg",
         "alt": "Vista panorámica de la ciudad desde el recinto"
       }
-    ]
+    ],
+    "logo": "/assets/logos/noso-logo.png"
   },
   "precio": {
     "monto": 70000,
@@ -124,7 +121,7 @@
       "vina": "La Rosa",
       "nombre": "Cynthia Ortiz",
       "cargo": "Enóloga",
-      "foto": "",
+      "foto": "/assets/enologas/la-rosa-cynthia-ortiz.jpg",
       "instagram": "@vinalarosa",
       "web": "https://larosa.cl"
     },
@@ -195,7 +192,7 @@
     ]
   },
   "imagenes": {
-    "hero": "",
+    "hero": "/assets/locacion/terraza-noche-01.jpg",
     "og": ""
   }
 }

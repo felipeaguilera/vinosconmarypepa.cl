@@ -550,3 +550,80 @@ Lo que sí seguía siendo válido de la revisión de hoy y no se revirtió: se s
 `2026-11-15-evento-prueba.json` (pedido del checklist de publicación), y se corrigió la grafía
 "Mary Pepa" y dos em dash en `README.md` y `SPEC.md`, que son archivos nuevos sin relación con el
 ajuste de Antigravity.
+
+
+**2026-09-08, segunda ronda: encabezado, hero y sección de ubicación alineados al material real de
+María Paz.** Felipe compartió el flyer y el listado que ella preparó, y pidió alinear el sitio
+exacto a esa estructura y contenido, dejando de lado el material del Hotel W para todo lo que sea
+copy y branding del evento. Decisión explícita de Felipe: "Tomamos la decisión de ignorar el
+contenido del Hotel W y seguir exactamente por la estructura y contenido que definió María Paz."
+
+Cambios en `src/data/eventos/2026-10-24-woman-wine.json`:
+
+1. **Encabezado.** `titulo` pasa a "Club Label Woman Wine" (era "Woman Wine"), `serie` pasa a
+   "Feria de vinos" (era "Club Label"), `bajada` y `descripcion` se reescriben con el texto del
+   flyer ("Te invita a la primera feria solo con enólogas mujeres" / "Conoce a las enólogas que
+   están dando que hablar en la industria del vino chileno"). Esto resuelve el bloqueante de nombre
+   documentado en sesiones anteriores a favor del flyer de María Paz, no del material del hotel.
+2. **Foto de Cynthia Ortiz.** Se copió `Inbox/CO 1.jpg` (7.2MB, horizontal), se recortó a vertical
+   2/3 (1200x1800, foco centrado en ella y las botellas de La Rosa / Don Reca) y se guardó en
+   `public/assets/enologas/la-rosa-cynthia-ortiz.jpg`, 240KB, bajo el límite de 250KB del spec de
+   participantes. `participantes[].foto` de La Rosa apunta a ese archivo.
+3. **Fotos del lugar, deduplicadas.** `terraza-butacas-03.jpg` se sacó del arreglo `lugar.fotos`:
+   es el mismo recorte de la misma foto que `terraza-noche-01.jpg` (ambas vienen de la foto inferior
+   de la página 2 del PDF de la Terraza), confirmado visualmente contra el PDF fuente. Quedan 4
+   fotos en vez de 5. También se corrigió el alt de `terraza-mesa-02.jpg`, que decía "Mesa dispuesta
+   con copas de degustación" y en realidad muestra el montaje de sillas negras y centros de flores
+   (foto del medio de esa misma página del PDF), sin copas visibles.
+4. **Logo del hotel.** Se extrajo el logotipo limpio de `NOSO 2026.pdf` (página 1, render a 400dpi,
+   recortado y con fondo transparente) y se guardó en `public/assets/logos/noso-logo.png`
+   (1104x501px). Nuevo campo `lugar.logo` en el JSON y en el tipo `EventoUbicacion` de
+   `src/lib/eventos.ts`.
+
+Cambios en componentes:
+
+- **`EventoHero.astro`, reescrito.** Agrega un fondo oscuro a sangre completa cuando
+  `evento.imagenes.hero` viene con valor (variable `tieneFondo`), con velo degradado para
+  legibilidad y texto en `--crema` (token nuevo en `global.css`, `#f2f0e4`, ya aprobado en
+  `PLAN-AMBIENTACION.md` sección 5). También ahora renderiza `evento.bajada` como párrafo bajo el
+  título. `imagenes.hero` se dejó en `/assets/locacion/terraza-noche-01.jpg`, que es la decisión
+  interina que ya estaba aprobada en `PLAN-AMBIENTACION.md` para cuando no hubiera foto de ambientación
+  propia del evento.
+- **`EventoUbicacion.astro`, reescrito.** Antes mostraba la tarjeta de información y una galería
+  pareja de todas las fotos del lugar. Ahora la primera foto del arreglo (`terraza-noche-01.jpg`)
+  se muestra grande arriba como identificador del restaurant, con el logo de Noso superpuesto
+  abajo a la derecha (invertido a blanco vía CSS filter para que se lea sobre foto oscura). Debajo
+  sigue la tarjeta de información sin cambios, y debajo de esa una galería más chica de 3 columnas
+  con el resto de las fotos.
+
+**Dos decisiones que tomé y que Felipe todavía no confirmó, quedan abiertas:**
+
+1. **Noso, no Nosso.** El logo extraído del PDF del hotel dice "Noso". El flyer de María Paz que
+   compartió Felipe usa "Nosso" (con doble s). Como la instrucción de Felipe fue ignorar el
+   contenido del Hotel W para estructura y copy del evento, pero esto no es copy del evento sino el
+   nombre propio de un restaurant de terceros, mantuve "Noso" (la grafía real, verificable en su
+   propio material) en vez de replicar la errata del flyer. Falta que Felipe confirme si esto entra
+   en la instrucción de seguir a María Paz al pie de la letra, o si aplica el criterio de exactitud
+   factual usado para el nombre del recinto Noso/Label Club en la sesión anterior.
+2. **Qué "página 2" se usó para la mini galería.** Felipe pidió "algunas de las imágenes de la
+   página 2" sin especificar de qué PDF. La página 2 de `NOSO 2026.pdf` es un mosaico de unas 12
+   fotos de otros eventos privados del recinto, con desconocidos identificables y ambientación de
+   marcas ajenas al evento: no es material para publicar. La página 2 de `TERRAZA 2026.pdf` en
+   cambio tiene exactamente 3 fotos limpias, sin personas, que ya eran las que estaban en
+   `public/assets/locacion/` (de ahí salió también el hallazgo de la foto duplicada). Usé esas 3,
+   asumiendo que era la intención. Falta que Felipe confirme el criterio.
+
+**Sigue sin resolverse:** la dirección del recinto. No aparece en ninguna de las dos páginas de
+`NOSO 2026.pdf` ni `TERRAZA 2026.pdf`; `lugar.direccion` queda vacío en el JSON. Hay que pedírsela a
+María Paz o al hotel directamente.
+
+**Fondo del hero vs. la referencia "Book here.png".** Felipe pidió un fondo "similar, por definir"
+a esa imagen: un close-up de una copa de vino tinto con marco fucsia y tipografía cream bold
+encima. No hay ningún activo del proyecto que se le parezca (es una foto de stock tipo macro, no
+una foto del recinto), así que el hero quedó con la foto de la terraza de noche, que es la decisión
+interina ya aprobada, no una interpretación de esa referencia. Si la dirección de "Book here.png"
+es la que se quiere para el hero final, hace falta conseguir o generar una foto de copa de vino en
+ese estilo; por ahora es un placeholder funcional, no el diseño final.
+
+Se agregó `.tmp-view/` a `.gitignore` (carpeta de trabajo para renders temporales de PDF/foto
+durante esta revisión, nunca se comitea).
