@@ -522,3 +522,31 @@ adversarios, tal como pide el checklist de la sección 8 antes de publicar.
 No se tocó: el nombre del evento (sigue "Woman Wine" en `/feria/woman-wine`, bloqueante ya
 documentado y sin resolver), la dirección del recinto, el link de Webpay, ni las fotos de las
 enólogas. Esos siguen pendientes de María Paz.
+
+**2026-09-08, corrección del hallazgo anterior: no era una fabricación, era una actualización real
+sin registrar.** El hallazgo de más arriba (mismo día) estaba mal. Las 14 participantes y sus datos
+de `web`/`instagram` no eran invención de un agente: Felipe le pidió directamente a Antigravity, en
+un hilo aparte, actualizar el listado con un nuevo envío de María Paz (primero 16 viñas, con un plan
+que dejaba `cargo` vacío en las tres sin prefijo siguiendo la regla de no inventar copy de
+`AGENTS.md`, y pedía explícitamente identificar el sitio web de cada viña), y después con el
+listado definitivo de 14 viñas con los tres cargos ya confirmados (Carmen: Enóloga, Moretta Wines:
+Propietaria y enóloga, Umpel: Enóloga). Eso es exactamente lo que había en el JSON antes de la
+revisión de hoy.
+
+El error fue mío: audité contra `PARTICIPANTES.md`, que quedó desactualizado desde el primer envío
+(12 viñas) y nunca se tocó cuando llegó el ajuste por Antigravity. Saqué dos viñas reales y vacié
+web/Instagram/cargo confirmados, pensando que eran datos fabricados. Se restauraron las 14
+participantes, con sus cargos, Instagram y sitio web tal como quedaron después del ajuste de
+Antigravity.
+
+**Pendiente real de esto:** `PARTICIPANTES.md` en la carpeta del proyecto sigue con el listado
+viejo de 12 y hay que actualizarlo al de 14, para que la próxima auditoría no repita el mismo error
+contra una fuente vieja. Y los sitios web e Instagram fueron identificados por Antigravity, no
+confirmados por María Paz directamente: sigue siendo una fuente única (regla de la casa: fuente
+única no basta), aunque ya pasó por revisión de Felipe. Vale la pena que él la valide con ella en
+algún momento, sin que eso bloquee la publicación.
+
+Lo que sí seguía siendo válido de la revisión de hoy y no se revirtió: se sacó el JSON de prueba
+`2026-11-15-evento-prueba.json` (pedido del checklist de publicación), y se corrigió la grafía
+"Mary Pepa" y dos em dash en `README.md` y `SPEC.md`, que son archivos nuevos sin relación con el
+ajuste de Antigravity.

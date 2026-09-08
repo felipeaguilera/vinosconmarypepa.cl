@@ -20,11 +20,26 @@
     "ciudad": "Santiago",
     "urlMapa": "",
     "fotos": [
-      { "archivo": "/assets/locacion/noso-salon-01.jpg", "alt": "Salón del evento con mesas dispuestas" },
-      { "archivo": "/assets/locacion/terraza-noche-01.jpg", "alt": "Espacio al aire libre de noche con vista a la ciudad" },
-      { "archivo": "/assets/locacion/terraza-mesa-02.jpg", "alt": "Mesa dispuesta con copas de degustación" },
-      { "archivo": "/assets/locacion/terraza-butacas-03.jpg", "alt": "Zona de descanso y butacas con vista panorámica" },
-      { "archivo": "/assets/locacion/terraza-vista-04.jpg", "alt": "Vista panorámica de la ciudad desde el recinto" }
+      {
+        "archivo": "/assets/locacion/noso-salon-01.jpg",
+        "alt": "Salón del evento con mesas dispuestas"
+      },
+      {
+        "archivo": "/assets/locacion/terraza-noche-01.jpg",
+        "alt": "Espacio al aire libre de noche con vista a la ciudad"
+      },
+      {
+        "archivo": "/assets/locacion/terraza-mesa-02.jpg",
+        "alt": "Mesa dispuesta con copas de degustación"
+      },
+      {
+        "archivo": "/assets/locacion/terraza-butacas-03.jpg",
+        "alt": "Zona de descanso y butacas con vista panorámica"
+      },
+      {
+        "archivo": "/assets/locacion/terraza-vista-04.jpg",
+        "alt": "Vista panorámica de la ciudad desde el recinto"
+      }
     ]
   },
   "precio": {
@@ -54,92 +69,129 @@
       "nombre": "Patricia Rodríguez",
       "cargo": "Propietaria y enóloga",
       "foto": "",
-      "instagram": ""
+      "instagram": "@atypicalvinos",
+      "web": "https://atypical-wines.com"
     },
     {
       "vina": "Bodega Volcanes",
       "nombre": "María del Pilar Díaz",
       "cargo": "Enóloga",
       "foto": "",
-      "instagram": ""
+      "instagram": "@bodegavolcanes",
+      "web": "https://volcanesdechile.com"
     },
     {
       "vina": "Buena Esperanza",
       "nombre": "Maine Chang",
       "cargo": "Propietaria",
       "foto": "",
-      "instagram": ""
+      "instagram": "@vinosbuenaesperanza",
+      "web": "https://www.buenaesperanza.cl"
     },
     {
       "vina": "Carmen",
       "nombre": "Ana María Cumsille",
-      "cargo": "",
+      "cargo": "Enóloga",
       "foto": "",
-      "instagram": ""
+      "instagram": "@vinacarmenchile",
+      "web": "https://www.carmen.com"
     },
     {
       "vina": "Cousiño Macul",
       "nombre": "Rosario Palma",
       "cargo": "Enóloga",
       "foto": "",
-      "instagram": ""
+      "instagram": "@cousinomacul",
+      "web": "https://cousinomacul.com"
     },
     {
       "vina": "Estación Yumbel",
       "nombre": "Daniela Tapia",
       "cargo": "Propietaria y enóloga",
       "foto": "",
-      "instagram": ""
+      "instagram": "@estacionyumbel",
+      "web": ""
     },
     {
       "vina": "Javiera Ortúzar Wines",
       "nombre": "Javiera Ortúzar",
       "cargo": "Propietaria y enóloga",
       "foto": "",
-      "instagram": ""
+      "instagram": "@javieraortuzarwines",
+      "web": ""
     },
     {
       "vina": "La Rosa",
       "nombre": "Cynthia Ortiz",
       "cargo": "Enóloga",
       "foto": "",
-      "instagram": ""
+      "instagram": "@vinalarosa",
+      "web": "https://larosa.cl"
     },
     {
       "vina": "Las Niñas",
       "nombre": "Valentina Olmedo",
       "cargo": "Enóloga",
       "foto": "",
-      "instagram": ""
+      "instagram": "@vinalasninas",
+      "web": "https://vinalasninas.com"
     },
     {
       "vina": "López Pangue",
       "nombre": "Paula Cárdenas",
       "cargo": "Enóloga",
       "foto": "",
-      "instagram": ""
+      "instagram": "@lopezpangue",
+      "web": "https://lopezpangue.cl"
+    },
+    {
+      "vina": "Moretta Wines",
+      "nombre": "Natalia Poblete",
+      "cargo": "Propietaria y enóloga",
+      "foto": "",
+      "instagram": "@morettawines",
+      "web": "https://morettawines.cl"
     },
     {
       "vina": "Umpel",
       "nombre": "Claudia Lastra",
-      "cargo": "",
+      "cargo": "Enóloga",
       "foto": "",
-      "instagram": ""
+      "instagram": "@umpel.cl",
+      "web": "https://www.umpelwines.com"
     },
     {
       "vina": "Viñedos Alcohuaz",
       "nombre": "Rosario Fillol",
       "cargo": "Enóloga",
       "foto": "",
-      "instagram": ""
+      "instagram": "@vinedosdealcohuaz",
+      "web": "https://alcohuaz.cl"
+    },
+    {
+      "vina": "Zorro y Cabra Wines",
+      "nombre": "Loreto Garau",
+      "cargo": "Enóloga",
+      "foto": "",
+      "instagram": "@zorroycabrawines",
+      "web": "https://www.zorroycabrawines.cl"
     }
   ],
   "contacto": {
     "email": "marypepa1974@gmail.com",
     "instagram": [
-      { "handle": "@vinosconmarypepa", "url": "https://instagram.com/vinosconmarypepa" },
-      { "handle": "@mariapazjimenezvino", "url": "https://instagram.com/mariapazjimenezvino" },
-      { "handle": "@wsantiago", "url": "https://instagram.com/wsantiago" }
+      {
+        "handle": "@vinosconmarypepa",
+        "url": "https://instagram.com/vinosconmarypepa"
+      },
+      {
+        "handle": "@mariapazjimenezvino",
+        "url": "https://instagram.com/mariapazjimenezvino"
+      },
+      {
+        "handle": "@wsantiago",
+        "url": "https://instagram.com/wsantiago"
+      }
     ]
   },
   "imagenes": {
