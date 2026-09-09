@@ -11,9 +11,10 @@ const lugarCompleto = [evento.lugar.nombre, evento.lugar.detalle].filter(Boolean
 const tieneFondo = Boolean(evento.imagenes.hero && evento.imagenes.hero.trim());
 
 const tieneLinkPago = Boolean(evento.pago.urlLink && evento.pago.urlLink.trim());
-const hrefCompra = tieneLinkPago ? evento.pago.urlLink : '#entradas';
+const hrefCompra = tieneLinkPago ? evento.pago.urlLink : '#';
 const targetCompra = tieneLinkPago ? '_blank' : undefined;
 const relCompra = tieneLinkPago ? 'noopener noreferrer' : undefined;
+const tieneIncluye = Boolean(evento.precio?.incluye && evento.precio.incluye.length > 0);
 ---
 
 <header class={`evento-hero textura-anillos ${tieneFondo ? 'con-fondo' : ''}`} id="hero">
@@ -53,14 +54,29 @@ const relCompra = tieneLinkPago ? 'noopener noreferrer' : undefined;
           <span class="dato-item">{lugarCompleto}</span>
         </>
       )}
-
-      {evento.precio.textoVisible && (
-        <>
-          <span class="dato-separador" aria-hidden="true">&middot;</span>
-          <span class="dato-item dato-precio">{evento.precio.textoVisible}</span>
-        </>
-      )}
     </div>
+
+    {(evento.precio.textoVisible || tieneIncluye) && (
+      <div class="hero-precio-box">
+        {evento.precio.textoVisible && (
+          <div class="hero-precio-valor">
+            <span class="precio-monto">{evento.precio.textoVisible}</span>
+            <span class="precio-detalle">por persona</span>
+          </div>
+        )}
+
+        {tieneIncluye && (
+          <ul class="hero-incluye-lista">
+            {evento.precio.incluye.map((item) => (
+              <li class="hero-incluye-item">
+                <span class="check-icono" aria-hidden="true">&#10003;</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    )}
 
     <div class="hero-cta-wrapper">
       <a
@@ -71,6 +87,7 @@ const relCompra = tieneLinkPago ? 'noopener noreferrer' : undefined;
       >
         {evento.pago.textoBoton || 'COMPRA TU ENTRADA AQUÍ'}
       </a>
+      <p class="hero-cupos-aviso">Cupos Limitados</p>
     </div>
   </div>
 </header>
@@ -203,26 +220,84 @@ const relCompra = tieneLinkPago ? 'noopener noreferrer' : undefined;
     color: var(--crema);
   }
 
-  .dato-separador {
-    color: var(--border);
+  .hero-precio-box {
+    background: rgba(10, 6, 6, 0.55);
+    border: 1px solid rgba(242, 240, 228, 0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin: 0 auto 1.75rem;
+    max-width: 440px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
 
-  .con-fondo .dato-separador {
-    color: var(--crema);
-    opacity: 0.4;
+  .hero-precio-valor {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(242, 240, 228, 0.15);
   }
 
-  .dato-precio {
+  .precio-monto {
+    font-size: clamp(2rem, 5vw, 2.5rem);
     font-weight: 700;
-    color: var(--accent);
+    color: var(--crema);
+    line-height: 1;
+    letter-spacing: -0.01em;
   }
 
-  .con-fondo .dato-precio {
+  .precio-detalle {
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     color: var(--crema);
+    opacity: 0.75;
+    font-weight: 500;
+  }
+
+  .hero-incluye-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    text-align: left;
+  }
+
+  .hero-incluye-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    font-size: 0.9375rem;
+    color: var(--crema);
+    line-height: 1.4;
+    opacity: 0.95;
+  }
+
+  .check-icono {
+    color: #4ade80;
+    font-weight: 700;
+    font-size: 0.875rem;
+    flex-shrink: 0;
   }
 
   .hero-cta-wrapper {
     margin-top: 0.5rem;
+  }
+
+  .hero-cupos-aviso {
+    margin-top: 0.65rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--crema);
+    opacity: 0.85;
   }
 
   .hero-btn-compra {

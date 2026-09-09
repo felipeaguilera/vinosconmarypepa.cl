@@ -5,7 +5,6 @@ import Header from '../components/Header.astro';
 import EventoHero from '../components/evento/EventoHero.astro';
 import EventoContenido from '../components/evento/EventoContenido.astro';
 import EventoDatos from '../components/evento/EventoDatos.astro';
-import EventoEntradas from '../components/evento/EventoEntradas.astro';
 import EventoUbicacion from '../components/evento/EventoUbicacion.astro';
 import EventoContacto from '../components/evento/EventoContacto.astro';
 import EventoCtaMovil from '../components/evento/EventoCtaMovil.astro';
@@ -33,10 +32,7 @@ const pageDescription = evento.bajada || evento.descripcion || `${evento.titulo}
     <!-- 2. Presentación y Participantes -->
     <EventoContenido evento={evento} />
 
-    <!-- 3. Entradas y pago: panel de reserva -->
-    <EventoEntradas evento={evento} />
-
-    <!-- 5. Ubicación y Galería del Lugar -->
+    <!-- 3. Ubicación y Mapa del Lugar -->
     <EventoUbicacion evento={evento} />
 
     <!-- 6. Información adicional / Restricciones (secundario) -->

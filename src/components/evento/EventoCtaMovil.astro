@@ -18,6 +18,7 @@ const esVentaActiva = evento.pago.estado === 'activo' && Boolean(evento.pago.url
         <div class="cta-movil-precio">
           <span class="precio-label">Total</span>
           <span class="precio-valor">{evento.precio.textoVisible}</span>
+          <span class="cupos-label">Cupos Limitados</span>
         </div>
       )}
       <a
@@ -26,7 +27,7 @@ const esVentaActiva = evento.pago.estado === 'activo' && Boolean(evento.pago.url
         target="_blank"
         rel="noopener noreferrer"
       >
-        {evento.pago.textoBoton || 'Compra tu entrada'}
+        {evento.pago.textoBoton || 'COMPRA TU ENTRADA AQUÍ'}
       </a>
     </div>
   </div>
@@ -75,6 +76,15 @@ const esVentaActiva = evento.pago.estado === 'activo' && Boolean(evento.pago.url
     font-weight: 600;
     color: var(--accent);
     line-height: 1.1;
+  }
+
+  .cupos-label {
+    font-size: 0.5625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-top: 0.15rem;
   }
 
   .cta-movil-boton {
