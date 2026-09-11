@@ -10,7 +10,8 @@ const { evento } = Astro.props;
 const lugarCompleto = [evento.lugar.nombre, evento.lugar.detalle].filter(Boolean).join(', ');
 const tieneFondo = Boolean(evento.imagenes.hero && evento.imagenes.hero.trim());
 
-const tieneLinkPago = Boolean(evento.pago.urlLink && evento.pago.urlLink.trim());
+const esTransferencia = evento.pago.proveedor === 'transferencia' || (!evento.pago.urlLink?.trim() && Boolean(evento.pago.transferencia));
+const tieneLinkPago = Boolean(evento.pago.urlLink && evento.pago.urlLink.trim() && !esTransferencia);
 const hrefCompra = tieneLinkPago ? evento.pago.urlLink : '#';
 const targetCompra = tieneLinkPago ? '_blank' : undefined;
 const relCompra = tieneLinkPago ? 'noopener noreferrer' : undefined;
@@ -84,6 +85,7 @@ const tieneIncluye = Boolean(evento.precio?.incluye && evento.precio.incluye.len
         target={targetCompra}
         rel={relCompra}
         class="hero-btn-compra"
+        data-abrir-transferencia={esTransferencia ? '' : undefined}
       >
         {evento.pago.textoBoton || 'COMPRA TU ENTRADA AQUÍ'}
       </a>

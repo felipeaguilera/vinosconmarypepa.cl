@@ -38,10 +38,19 @@
     ]
   },
   "pago": {
-    "proveedor": "webpay",
+    "proveedor": "transferencia",
     "estado": "activo",
-    "urlLink": "https://mariapazjimenez.cl",
-    "textoBoton": "COMPRA TU ENTRADA AQUÍ"
+    "urlLink": "",
+    "textoBoton": "COMPRA TU ENTRADA AQUÍ",
+    "transferencia": {
+      "banco": "Banco de Chile",
+      "tipoCuenta": "Cuenta Corriente",
+      "numeroCuenta": "Por confirmar",
+      "titular": "María Paz Jiménez",
+      "rut": "Por confirmar",
+      "email": "marypepa1974@gmail.com",
+      "instrucciones": "Realiza la transferencia y envía el comprobante a marypepa1974@gmail.com indicando nombre completo y RUT de los asistentes para asegurar tus cupos."
+    }
   },
   "restricciones": [
     "Evento exclusivo para mayores de 18 años",
@@ -53,7 +62,7 @@
       "vina": "Atypical Wines",
       "nombre": "Patricia Rodríguez",
       "cargo": "Propietaria y enóloga",
-      "foto": "",
+      "foto": "/assets/enologas/atypical-patricia-rodriguez.jpg",
       "instagram": "@atypicalvinos",
       "web": "https://atypical-wines.com"
     },
@@ -61,7 +70,7 @@
       "vina": "Bodega Volcanes",
       "nombre": "María del Pilar Díaz",
       "cargo": "Enóloga",
-      "foto": "",
+      "foto": "/assets/enologas/bodega-volcanes-pilar-diaz.jpg",
       "instagram": "@bodegavolcanes",
       "web": "https://volcanesdechile.com"
     },
@@ -69,7 +78,7 @@
       "vina": "Buena Esperanza",
       "nombre": "Maine Chang",
       "cargo": "Propietaria",
-      "foto": "",
+      "foto": "/assets/enologas/buena-esperanza-maine-chang.jpg",
       "instagram": "@vinosbuenaesperanza",
       "web": "https://www.buenaesperanza.cl"
     },
@@ -77,7 +86,7 @@
       "vina": "Carmen",
       "nombre": "Ana María Cumsille",
       "cargo": "Enóloga",
-      "foto": "",
+      "foto": "/assets/enologas/carmen-ana-maria-cumsille.jpg",
       "instagram": "@vinacarmenchile",
       "web": "https://www.carmen.com"
     },
@@ -85,7 +94,7 @@
       "vina": "Cousiño Macul",
       "nombre": "Rosario Palma",
       "cargo": "Enóloga",
-      "foto": "",
+      "foto": "/assets/enologas/cousino-macul-rosario-palma.jpg",
       "instagram": "@cousinomacul",
       "web": "https://cousinomacul.com"
     },
@@ -93,7 +102,7 @@
       "vina": "Estación Yumbel",
       "nombre": "Daniela Tapia",
       "cargo": "Propietaria y enóloga",
-      "foto": "",
+      "foto": "/assets/enologas/estacion-yumbel-daniela-tapia.jpg",
       "instagram": "@estacionyumbel",
       "web": ""
     },
@@ -101,7 +110,7 @@
       "vina": "Javiera Ortúzar Wines",
       "nombre": "Javiera Ortúzar",
       "cargo": "Propietaria y enóloga",
-      "foto": "",
+      "foto": "/assets/enologas/javiera-ortuzar-javiera-ortuzar.jpg",
       "instagram": "@javieraortuzarwines",
       "web": ""
     },
@@ -117,7 +126,7 @@
       "vina": "Las Niñas",
       "nombre": "Valentina Olmedo",
       "cargo": "Enóloga",
-      "foto": "",
+      "foto": "/assets/enologas/las-ninas-valentina-olmedo.jpg",
       "instagram": "@vinalasninas",
       "web": "https://vinalasninas.com"
     },
@@ -125,7 +134,7 @@
       "vina": "López Pangue",
       "nombre": "Paula Cárdenas",
       "cargo": "Enóloga",
-      "foto": "",
+      "foto": "/assets/enologas/lopez-pangue-paula-cardenas.jpg",
       "instagram": "@lopezpangue",
       "web": "https://lopezpangue.cl"
     },
@@ -133,7 +142,7 @@
       "vina": "Moretta Wines",
       "nombre": "Natalia Poblete",
       "cargo": "Propietaria y enóloga",
-      "foto": "",
+      "foto": "/assets/enologas/moretta-wines-natalia-poblete.jpg",
       "instagram": "@morettawines",
       "web": "https://morettawines.cl"
     },
@@ -141,7 +150,7 @@
       "vina": "Umpel",
       "nombre": "Claudia Lastra",
       "cargo": "Enóloga",
-      "foto": "",
+      "foto": "/assets/enologas/umpel-wines-claudia-lastra.jpg",
       "instagram": "@umpel.cl",
       "web": "https://www.umpelwines.com"
     },
@@ -149,7 +158,7 @@
       "vina": "Viñedos Alcohuaz",
       "nombre": "Rosario Fillol",
       "cargo": "Enóloga",
-      "foto": "",
+      "foto": "/assets/enologas/vinedos-alcohuaz-rosario-fillol.jpg",
       "instagram": "@vinedosdealcohuaz",
       "web": "https://alcohuaz.cl"
     },
@@ -157,7 +166,7 @@
       "vina": "Zorro y Cabra Wines",
       "nombre": "Loreto Garau",
       "cargo": "Enóloga",
-      "foto": "",
+      "foto": "/assets/enologas/zorro-y-cabra-loreto-garau.jpg",
       "instagram": "@zorroycabrawines",
       "web": "https://www.zorroycabrawines.cl"
     }

@@ -8,8 +8,9 @@ interface Props {
 
 const { evento } = Astro.props;
 
-const ventaActiva = evento.pago.estado === 'activo' && Boolean(evento.pago.urlLink?.trim());
-const hrefBoton = ventaActiva ? evento.pago.urlLink : '#entradas';
+const esTransferencia = evento.pago.proveedor === 'transferencia' || (!evento.pago.urlLink?.trim() && Boolean(evento.pago.transferencia));
+const ventaActiva = evento.pago.estado === 'activo' && (Boolean(evento.pago.urlLink?.trim()) || esTransferencia);
+const hrefBoton = (!esTransferencia && evento.pago.urlLink?.trim()) ? evento.pago.urlLink : '#';
 const textoBoton = evento.pago.textoBoton || 'COMPRA TU ENTRADA AQUÍ';
 ---
 
@@ -22,8 +23,9 @@ const textoBoton = evento.pago.textoBoton || 'COMPRA TU ENTRADA AQUÍ';
     <a
       href={hrefBoton}
       class="site-header-boton"
-      target={ventaActiva ? '_blank' : undefined}
-      rel={ventaActiva ? 'noopener noreferrer' : undefined}
+      target={(!esTransferencia && ventaActiva) ? '_blank' : undefined}
+      rel={(!esTransferencia && ventaActiva) ? 'noopener noreferrer' : undefined}
+      data-abrir-transferencia={esTransferencia ? '' : undefined}
     >
       {textoBoton}
     </a>

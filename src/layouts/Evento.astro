@@ -8,6 +8,7 @@ import EventoDatos from '../components/evento/EventoDatos.astro';
 import EventoUbicacion from '../components/evento/EventoUbicacion.astro';
 import EventoContacto from '../components/evento/EventoContacto.astro';
 import EventoCtaMovil from '../components/evento/EventoCtaMovil.astro';
+import ModalTransferencia from '../components/evento/ModalTransferencia.astro';
 import sitio from '../data/sitio.json';
 
 interface Props {
@@ -43,6 +44,9 @@ const pageDescription = evento.bajada || evento.descripcion || `${evento.titulo}
 
     <!-- CTA fijo para móvil (solo cuando la venta está activa) -->
     <EventoCtaMovil evento={evento} />
+
+    <!-- Modal accesible de transferencia bancaria -->
+    <ModalTransferencia evento={evento} />
   </main>
 </Base>
 

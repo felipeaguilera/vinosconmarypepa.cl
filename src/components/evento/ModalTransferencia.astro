@@ -1,0 +1,352 @@
+---
+import type { EventoData } from '../../lib/eventos';
+
+interface Props {
+  evento: EventoData;
+}
+
+const { evento } = Astro.props;
+const t = evento.pago.transferencia || {};
+const emailContacto = t.email || evento.contacto.email || 'marypepa1974@gmail.com';
+const subjectEmail = encodeURIComponent(`Comprobante de Transferencia: ${evento.titulo}`);
+const mailtoHref = `mailto:${emailContacto}?subject=${subjectEmail}`;
+---
+
+<dialog id="modal-transferencia" class="modal-transferencia" aria-labelledby="modal-titulo">
+  <div class="modal-contenido">
+    <button type="button" class="modal-btn-cerrar" id="btn-cerrar-modal" aria-label="Cerrar modal">&times;</button>
+
+    <div class="modal-cabecera">
+      <span class="modal-eyebrow">Pago de Entradas</span>
+      <h3 id="modal-titulo" class="modal-titulo">Datos de Transferencia Bancaria</h3>
+      {evento.precio.textoVisible && (
+        <div class="modal-precio-badge">
+          <span class="modal-precio-monto">{evento.precio.textoVisible}</span>
+          <span class="modal-precio-sub">por persona</span>
+        </div>
+      )}
+    </div>
+
+    <div class="modal-cuerpo">
+      <div class="datos-transferencia-caja" id="caja-datos-transferencia">
+        <div class="dato-fila">
+          <span class="dato-etiqueta">Banco:</span>
+          <span class="dato-valor" data-copy="banco">{t.banco || 'Banco de Chile'}</span>
+        </div>
+        <div class="dato-fila">
+          <span class="dato-etiqueta">Tipo de Cuenta:</span>
+          <span class="dato-valor" data-copy="tipoCuenta">{t.tipoCuenta || 'Cuenta Corriente'}</span>
+        </div>
+        <div class="dato-fila">
+          <span class="dato-etiqueta">N° de Cuenta:</span>
+          <span class="dato-valor dato-destacado" data-copy="numeroCuenta">{t.numeroCuenta || 'Por confirmar'}</span>
+        </div>
+        <div class="dato-fila">
+          <span class="dato-etiqueta">Titular:</span>
+          <span class="dato-valor" data-copy="titular">{t.titular || 'María Paz Jiménez'}</span>
+        </div>
+        <div class="dato-fila">
+          <span class="dato-etiqueta">RUT:</span>
+          <span class="dato-valor" data-copy="rut">{t.rut || 'Por confirmar'}</span>
+        </div>
+        <div class="dato-fila">
+          <span class="dato-etiqueta">Correo de Envío:</span>
+          <span class="dato-valor" data-copy="email">{emailContacto}</span>
+        </div>
+      </div>
+
+      <button type="button" class="btn-copiar-datos" id="btn-copiar-datos">
+        <span class="icono-copiar" aria-hidden="true">&#128203;</span>
+        <span id="texto-btn-copiar">Copiar datos de cuenta</span>
+      </button>
+
+      <div class="modal-instrucciones">
+        <p class="instruccion-texto">
+          {t.instrucciones || 'Una vez realizada la transferencia, envía el comprobante a marypepa1974@gmail.com indicando nombre completo y RUT de los asistentes para asegurar tus cupos.'}
+        </p>
+      </div>
+
+      <div class="modal-acciones">
+        <a href={mailtoHref} class="btn-enviar-comprobante">
+          Enviar comprobante por correo &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  function setupModalTransferencia() {
+    const modal = document.getElementById('modal-transferencia') as HTMLDialogElement | null;
+    const btnCerrar = document.getElementById('btn-cerrar-modal');
+    const btnCopiar = document.getElementById('btn-copiar-datos');
+    const textoCopiar = document.getElementById('texto-btn-copiar');
+    const triggers = document.querySelectorAll('[data-abrir-transferencia]');
+
+    if (!modal) return;
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.showModal();
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function cerrarModal() {
+      if (!modal) return;
+      modal.close();
+      document.body.style.overflow = '';
+    }
+
+    if (btnCerrar) {
+      btnCerrar.addEventListener('click', cerrarModal);
+    }
+
+    // Cerrar al hacer clic en el backdrop
+    modal.addEventListener('click', (e) => {
+      const rect = modal.getBoundingClientRect();
+      const clickEnDialog =
+        rect.top <= e.clientY &&
+        e.clientY <= rect.top + rect.height &&
+        rect.left <= e.clientX &&
+        e.clientX <= rect.left + rect.width;
+      if (!clickEnDialog) {
+        cerrarModal();
+      }
+    });
+
+    modal.addEventListener('close', () => {
+      document.body.style.overflow = '';
+    });
+
+    // Copiar datos al portapapeles
+    if (btnCopiar && textoCopiar) {
+      btnCopiar.addEventListener('click', async () => {
+        const filas = Array.from(modal.querySelectorAll('.dato-fila'));
+        const valores = filas.map((fila) => {
+          const etiqueta = (fila.querySelector('.dato-etiqueta')?.textContent || '').trim();
+          const valor = (fila.querySelector('.dato-valor')?.textContent || '').trim();
+          return `${etiqueta} ${valor}`;
+        });
+        const textoCompleto = valores.join('\n');
+
+        try {
+          await navigator.clipboard.writeText(textoCompleto);
+          textoCopiar.textContent = '¡Datos copiados!';
+          btnCopiar.classList.add('copiado');
+          setTimeout(() => {
+            if (textoCopiar) textoCopiar.textContent = 'Copiar datos de cuenta';
+            btnCopiar.classList.remove('copiado');
+          }, 3000);
+        } catch (err) {
+          console.error('Error al copiar:', err);
+        }
+      });
+    }
+  }
+
+  setupModalTransferencia();
+</script>
+
+<style>
+  .modal-transferencia {
+    border: none;
+    border-radius: 12px;
+    padding: 0;
+    max-width: 480px;
+    width: 90vw;
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    margin: auto;
+  }
+
+  .modal-transferencia::backdrop {
+    background: rgba(10, 6, 6, 0.75);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .modal-contenido {
+    position: relative;
+    padding: 2rem 1.75rem 1.75rem;
+  }
+
+  .modal-btn-cerrar {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    font-size: 1.75rem;
+    line-height: 1;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: color 0.15s ease;
+  }
+
+  .modal-btn-cerrar:hover {
+    color: var(--accent);
+  }
+
+  .modal-cabecera {
+    text-align: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .modal-eyebrow {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .modal-titulo {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+
+  .modal-precio-badge {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+  }
+
+  .modal-precio-monto {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .modal-precio-sub {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .datos-transferencia-caja {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    margin-bottom: 1rem;
+  }
+
+  .dato-fila {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    padding-bottom: 0.35rem;
+  }
+
+  .dato-fila:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .dato-etiqueta {
+    color: var(--muted);
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .dato-valor {
+    color: var(--text);
+    font-weight: 600;
+    text-align: right;
+    word-break: break-all;
+  }
+
+  .dato-destacado {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .btn-copiar-datos {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.65rem 1rem;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    margin-bottom: 1.25rem;
+  }
+
+  .btn-copiar-datos:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .btn-copiar-datos.copiado {
+    background: #ecfdf5;
+    border-color: #10b981;
+    color: #047857;
+  }
+
+  .modal-instrucciones {
+    background: rgba(136, 0, 0, 0.04);
+    border-left: 3px solid var(--accent);
+    padding: 0.75rem 1rem;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 1.25rem;
+  }
+
+  .instruccion-texto {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .modal-acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .btn-enviar-comprobante {
+    display: block;
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 0.85rem 1.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+  }
+
+  .btn-enviar-comprobante:hover {
+    background: #6e0000;
+  }
+</style>

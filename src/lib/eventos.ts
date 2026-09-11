@@ -53,6 +53,16 @@ export interface EventoData {
     urlLink: string;
     textoBoton: string;
     _estados?: string[];
+    transferencia?: {
+      banco?: string;
+      tipoCuenta?: string;
+      numeroCuenta?: string;
+      titular?: string;
+      rut?: string;
+      email?: string;
+      instrucciones?: string;
+      whatsapp?: string;
+    };
   };
   restricciones: string[];
   participantes: Participante[];

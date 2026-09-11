@@ -7,8 +7,9 @@ interface Props {
 
 const { evento } = Astro.props;
 
-// El CTA fijo solo se emite cuando la venta está efectivamente activa con URL válida
-const esVentaActiva = evento.pago.estado === 'activo' && Boolean(evento.pago.urlLink?.trim());
+const esTransferencia = evento.pago.proveedor === 'transferencia' || (!evento.pago.urlLink?.trim() && Boolean(evento.pago.transferencia));
+const esVentaActiva = evento.pago.estado === 'activo' && (Boolean(evento.pago.urlLink?.trim()) || esTransferencia);
+const hrefBoton = (!esTransferencia && evento.pago.urlLink?.trim()) ? evento.pago.urlLink : '#';
 ---
 
 {esVentaActiva && (
@@ -22,10 +23,11 @@ const esVentaActiva = evento.pago.estado === 'activo' && Boolean(evento.pago.url
         </div>
       )}
       <a
-        href={evento.pago.urlLink}
+        href={hrefBoton}
         class="cta-movil-boton"
-        target="_blank"
-        rel="noopener noreferrer"
+        target={(!esTransferencia && esVentaActiva) ? '_blank' : undefined}
+        rel={(!esTransferencia && esVentaActiva) ? 'noopener noreferrer' : undefined}
+        data-abrir-transferencia={esTransferencia ? '' : undefined}
       >
         {evento.pago.textoBoton || 'COMPRA TU ENTRADA AQUÍ'}
       </a>
