@@ -32,9 +32,9 @@
     "moneda": "CLP",
     "textoVisible": "$70.000",
     "incluye": [
-      "Copa",
+      "Copa de Vino",
       "Degustaciones ilimitadas",
-      "Estaciones de gastronomía de Noso"
+      "Estaciones de Gastronomía de Restaurant Noso"
     ]
   },
   "pago": {
@@ -43,13 +43,13 @@
     "urlLink": "",
     "textoBoton": "COMPRA TU ENTRADA AQUÍ",
     "transferencia": {
-      "banco": "Banco de Chile",
-      "tipoCuenta": "Cuenta Corriente",
-      "numeroCuenta": "Por confirmar",
-      "titular": "María Paz Jiménez",
-      "rut": "Por confirmar",
+      "banco": "Banco Estado",
+      "tipoCuenta": "Cuenta Vista",
+      "numeroCuenta": "33670524791",
+      "titular": "Maria Paz Jimenez SPA",
+      "rut": "78.464.025-6",
       "email": "marypepa1974@gmail.com",
-      "instrucciones": "Realiza la transferencia y envía el comprobante a marypepa1974@gmail.com indicando nombre completo y RUT de los asistentes para asegurar tus cupos."
+      "instrucciones": "Realiza la transferencia y envía el comprobante a marypepa1974@gmail.com indicando nombre completo de los asistentes para asegurar tus cupos."
     }
   },
   "restricciones": [
@@ -121,6 +121,14 @@
       "foto": "/assets/enologas/la-rosa-cynthia-ortiz.jpg",
       "instagram": "@vinalarosa",
       "web": "https://larosa.cl"
+    },
+    {
+      "vina": "Lapostolle-Clos Apalta",
+      "nombre": "Andrea León",
+      "cargo": "Enóloga",
+      "foto": "/assets/enologas/lapostolle-clos-apalta-andrea-leon.jpg",
+      "instagram": "@closapalta",
+      "web": "https://closapalta.com"
     },
     {
       "vina": "Las Niñas",

@@ -50,10 +50,7 @@ const tieneIncluye = Boolean(evento.precio?.incluye && evento.precio.incluye.len
       )}
 
       {lugarCompleto && (
-        <>
-          <span class="dato-separador" aria-hidden="true">&middot;</span>
-          <span class="dato-item">{lugarCompleto}</span>
-        </>
+        <span class="dato-item dato-lugar">{lugarCompleto}</span>
       )}
     </div>
 
@@ -204,10 +201,10 @@ const tieneIncluye = Boolean(evento.precio?.incluye && evento.precio.incluye.len
 
   .hero-datos-clave {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem 0.6rem;
+    gap: 0.35rem;
     margin: 0 auto 1.75rem;
     font-size: 0.9375rem;
     font-weight: 500;

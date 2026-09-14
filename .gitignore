@@ -18,3 +18,7 @@ Thumbs.db
 
 # Scratch view files (PDF/image extraction previews, never committed)
 .tmp-view/
+
+# Design working files
+*.af
+*.af~lock~

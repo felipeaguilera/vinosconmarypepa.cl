@@ -51,7 +51,7 @@ const mailtoHref = `mailto:${emailContacto}?subject=${subjectEmail}`;
         </div>
         <div class="dato-fila">
           <span class="dato-etiqueta">Correo de Envío:</span>
-          <span class="dato-valor" data-copy="email">{emailContacto}</span>
+          <a href={`mailto:${emailContacto}`} class="dato-valor dato-link" data-copy="email">{emailContacto}</a>
         </div>
       </div>
 
@@ -62,14 +62,8 @@ const mailtoHref = `mailto:${emailContacto}?subject=${subjectEmail}`;
 
       <div class="modal-instrucciones">
         <p class="instruccion-texto">
-          {t.instrucciones || 'Una vez realizada la transferencia, envía el comprobante a marypepa1974@gmail.com indicando nombre completo y RUT de los asistentes para asegurar tus cupos.'}
+          Realiza la transferencia y envía el comprobante a <a href={`mailto:${emailContacto}`} class="link-correo">{emailContacto}</a> indicando nombre completo de los asistentes para asegurar tus cupos.
         </p>
-      </div>
-
-      <div class="modal-acciones">
-        <a href={mailtoHref} class="btn-enviar-comprobante">
-          Enviar comprobante por correo &rarr;
-        </a>
       </div>
     </div>
   </div>
@@ -327,26 +321,23 @@ const mailtoHref = `mailto:${emailContacto}?subject=${subjectEmail}`;
     margin: 0;
   }
 
-  .modal-acciones {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+  .dato-link {
+    color: var(--accent);
+    text-decoration: underline;
+    transition: opacity 0.15s ease;
   }
 
-  .btn-enviar-comprobante {
-    display: block;
-    background: var(--accent);
-    color: #ffffff;
-    font-size: 0.9375rem;
-    font-weight: 700;
-    text-align: center;
-    padding: 0.85rem 1.25rem;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: background-color 0.15s ease;
+  .dato-link:hover {
+    opacity: 0.8;
   }
 
-  .btn-enviar-comprobante:hover {
-    background: #6e0000;
+  .link-correo {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  .link-correo:hover {
+    opacity: 0.8;
   }
 </style>
