@@ -42,9 +42,14 @@ const parrafosDescripcion = evento.descripcion
     {evento.participantes && evento.participantes.length > 0 && (
       <div class="bloque-participantes" id="participantes">
         <div class="participantes-cabecera">
-          <h3 class="participantes-titulo">Participantes</h3>
+          <div class="participantes-titular">
+            <h3 class="participantes-titulo">Participantes</h3>
+            <span class="indicador-scroll" aria-label="Desliza horizontalmente para ver todas las participantes">
+              <span class="flecha-scroll" aria-hidden="true">&#8592;</span> Desliza para ver más <span class="flecha-scroll" aria-hidden="true">&#8594;</span>
+            </span>
+          </div>
 
-          <div class="carrusel-controles" aria-hidden="true">
+          <div class="carrusel-controles" aria-label="Controles de carrusel">
             <button type="button" class="btn-carrusel btn-prev" id="btn-enologas-prev" aria-label="Anterior">
               &#8592;
             </button>
@@ -54,7 +59,8 @@ const parrafosDescripcion = evento.descripcion
           </div>
         </div>
 
-        <div class="carrusel-enologas" id="carrusel-enologas">
+        <div class="carrusel-wrapper">
+          <div class="carrusel-enologas" id="carrusel-enologas">
           {evento.participantes.map((p) => {
             const tieneFoto = Boolean(p.foto && p.foto.trim());
 
@@ -84,6 +90,7 @@ const parrafosDescripcion = evento.descripcion
           })}
         </div>
       </div>
+    </div>
     )}
   </div>
 </section>
@@ -106,6 +113,7 @@ const parrafosDescripcion = evento.descripcion
   }
 
   setupCarrusel();
+  document.addEventListener('astro:page-load', setupCarrusel);
 </script>
 
 <style>
@@ -187,11 +195,18 @@ const parrafosDescripcion = evento.descripcion
   }
 
   .participantes-cabecera {
-    position: relative;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.25rem;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .participantes-titular {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    text-align: left;
   }
 
   .participantes-titulo {
@@ -201,14 +216,29 @@ const parrafosDescripcion = evento.descripcion
     line-height: 1.2;
     font-style: italic;
     font-weight: 600;
-    text-align: center;
+    margin: 0;
+  }
+
+  .indicador-scroll {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  .flecha-scroll {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.8125rem;
   }
 
   .carrusel-controles {
-    position: absolute;
-    right: 0;
-    display: none;
-    gap: 0.5rem;
+    display: flex;
+    gap: 0.4rem;
+    flex-shrink: 0;
   }
 
   .btn-carrusel {
@@ -230,6 +260,10 @@ const parrafosDescripcion = evento.descripcion
     border-color: var(--accent);
     color: var(--accent);
     background: #ffffff;
+  }
+
+  .carrusel-wrapper {
+    position: relative;
   }
 
   .carrusel-enologas {
@@ -358,10 +392,6 @@ const parrafosDescripcion = evento.descripcion
 
     .presentacion-eyebrow {
       text-align: left;
-    }
-
-    .carrusel-controles {
-      display: flex;
     }
 
     .tarjeta-enologa-mini {
