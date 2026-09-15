@@ -16,7 +16,7 @@ const comingSoonTitle = `${sitio.nombre} | Próximamente`;
   eventoDestacado ? (
     <Evento evento={eventoDestacado} canonical={canonical} />
   ) : (
-    <Base title={comingSoonTitle} description="Sitio en construcción." bodyClass="coming-soon" canonical={canonical} noindex={true}>
+    <Base title={comingSoonTitle} description="Sitio oficial de Vinos con Marypepa." bodyClass="coming-soon" canonical={canonical} noindex={false}>
       <main class="card">
         <p class="wordmark">{sitio.nombre}</p>
         <p class="tagline">{sitio.tagline}</p>

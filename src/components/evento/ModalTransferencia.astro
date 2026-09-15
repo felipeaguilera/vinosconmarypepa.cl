@@ -84,6 +84,12 @@ const mailtoHref = `mailto:${emailContacto}?subject=${subjectEmail}`;
         e.preventDefault();
         modal.showModal();
         document.body.style.overflow = 'hidden';
+        if (typeof (window as any).gtag === 'function') {
+          (window as any).gtag('event', 'abrir_modal_transferencia', {
+            event_category: 'conversion',
+            event_label: 'Datos de Transferencia',
+          });
+        }
       });
     });
 
@@ -129,6 +135,12 @@ const mailtoHref = `mailto:${emailContacto}?subject=${subjectEmail}`;
           await navigator.clipboard.writeText(textoCompleto);
           textoCopiar.textContent = '¡Datos copiados!';
           btnCopiar.classList.add('copiado');
+          if (typeof (window as any).gtag === 'function') {
+            (window as any).gtag('event', 'copiar_datos_cuenta', {
+              event_category: 'conversion',
+              event_label: 'Copia Cuenta Bancaria',
+            });
+          }
           setTimeout(() => {
             if (textoCopiar) textoCopiar.textContent = 'Copiar datos de cuenta';
             btnCopiar.classList.remove('copiado');

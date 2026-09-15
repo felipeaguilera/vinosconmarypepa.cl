@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import sitio from '../data/sitio.json';
 
 interface Props {
   title: string;
@@ -21,6 +22,8 @@ const {
   bodyClass = '',
   noindex = false,
 } = Astro.props;
+
+const gaId = import.meta.env.PUBLIC_GA_ID || sitio.googleAnalyticsId;
 
 const canonical = customCanonical
   ? (customCanonical instanceof URL ? customCanonical : new URL(customCanonical, Astro.site))
@@ -59,6 +62,18 @@ const ogImage = image ? new URL(image, Astro.site) : null;
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
+
+    {gaId && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+        <script is:inline define:vars={{ gaId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', gaId);
+        </script>
+      </>
+    )}
   </head>
   <body class={bodyClass}>
     <slot />
