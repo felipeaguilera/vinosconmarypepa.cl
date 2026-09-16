@@ -5,7 +5,7 @@
   "titulo": "Club Label Woman Wine",
   "serie": "Feria de vinos",
   "presenta": "Vinos con Marypepa",
-  "bajada": "Te invita a la primera feria solo con enólogas mujeres.",
+  "bajada": "Te invita a la primera feria solo con enólogas.",
   "descripcion": "Conoce a las enólogas que están dando que hablar en la industria del vino chileno.",
   "fecha": {
     "inicio": "2026-10-24T19:00:00-03:00",
@@ -38,10 +38,16 @@
     ]
   },
   "pago": {
-    "proveedor": "transferencia",
+    "proveedor": "webpay",
     "estado": "activo",
-    "urlLink": "",
+    "urlLink": "https://www.webpay.cl/form-pay/421759",
     "textoBoton": "COMPRA TU ENTRADA AQUÍ",
+    "promocion": {
+      "titulo": "Promo 2x",
+      "textoPrecio": "$136.000",
+      "urlLink": "https://www.webpay.cl/form-pay/422059",
+      "textoBoton": "2 Entradas por $136.000"
+    },
     "transferencia": {
       "banco": "Banco Estado",
       "tipoCuenta": "Cuenta Vista",

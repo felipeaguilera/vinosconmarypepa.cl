@@ -16,6 +16,7 @@ const hrefCompra = tieneLinkPago ? evento.pago.urlLink : '#';
 const targetCompra = tieneLinkPago ? '_blank' : undefined;
 const relCompra = tieneLinkPago ? 'noopener noreferrer' : undefined;
 const tieneIncluye = Boolean(evento.precio?.incluye && evento.precio.incluye.length > 0);
+const tienePromo = Boolean(evento.pago.promocion && evento.pago.promocion.urlLink?.trim());
 ---
 
 <header class={`evento-hero textura-anillos ${tieneFondo ? 'con-fondo' : ''}`} id="hero">
@@ -86,6 +87,21 @@ const tieneIncluye = Boolean(evento.precio?.incluye && evento.precio.incluye.len
       >
         {evento.pago.textoBoton || 'COMPRA TU ENTRADA AQUÍ'}
       </a>
+
+      {tienePromo && evento.pago.promocion && (
+        <div class="hero-promo-wrapper">
+          <a
+            href={evento.pago.promocion.urlLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hero-btn-promo"
+          >
+            <span class="hero-promo-texto">{evento.pago.promocion.textoBoton || `2 Entradas por ${evento.pago.promocion.textoPrecio}`}</span>
+            <span class="hero-promo-flecha" aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      )}
+
       <p class="hero-cupos-aviso">Cupos Limitados</p>
     </div>
   </div>
@@ -328,6 +344,66 @@ const tieneIncluye = Boolean(evento.precio?.incluye && evento.precio.incluye.len
     background: #ffffff;
     color: var(--accent-oscuro, #500000);
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+  }
+
+  .hero-promo-wrapper {
+    margin-top: 0.85rem;
+  }
+
+  .hero-btn-promo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: rgba(136, 0, 0, 0.05);
+    border: 1px solid rgba(136, 0, 0, 0.2);
+    padding: 0.45rem 1.25rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+    transition: all 0.2s ease;
+  }
+
+  .hero-btn-promo:hover {
+    background: rgba(136, 0, 0, 0.1);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .con-fondo .hero-btn-promo {
+    background: rgba(242, 240, 228, 0.08);
+    border: 1px solid rgba(242, 240, 228, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--crema);
+  }
+
+  .con-fondo .hero-btn-promo:hover {
+    background: rgba(242, 240, 228, 0.18);
+    border-color: rgba(242, 240, 228, 0.5);
+    color: #ffffff;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .hero-promo-texto {
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .hero-promo-flecha {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    opacity: 0.8;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+
+  .hero-btn-promo:hover .hero-promo-flecha {
+    opacity: 1;
+    transform: translateX(3px);
   }
 
   @media (min-width: 640px) {

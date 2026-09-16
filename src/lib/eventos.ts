@@ -53,6 +53,12 @@ export interface EventoData {
     urlLink: string;
     textoBoton: string;
     _estados?: string[];
+    promocion?: {
+      titulo: string;
+      textoPrecio: string;
+      urlLink: string;
+      textoBoton?: string;
+    };
     transferencia?: {
       banco?: string;
       tipoCuenta?: string;
