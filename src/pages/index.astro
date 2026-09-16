@@ -5,9 +5,7 @@ import { getEventoDestacado } from '../lib/eventos';
 import sitio from '../data/sitio.json';
 
 const eventoDestacado = getEventoDestacado();
-const canonical = eventoDestacado
-  ? new URL(`/feria/${eventoDestacado.slug}`, Astro.site)
-  : new URL('/', Astro.site);
+const canonical = new URL('/', Astro.site);
 
 const comingSoonTitle = `${sitio.nombre} | Próximamente`;
 ---
