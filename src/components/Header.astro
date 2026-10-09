@@ -16,8 +16,8 @@ const textoBoton = evento.pago.textoBoton || 'COMPRA TU ENTRADA AQUÍ';
 
 <header class="site-header">
   <div class="site-header-contenedor">
-    <a href="/" class="site-header-logo" title="Vinos con Marypepa presenta: Club Label Woman Wine">
-      <span class="site-header-nombre">Vinos con Marypepa presenta: Club Label Woman Wine</span>
+    <a href="/" class="site-header-logo" title={`${evento.presenta} presenta: ${evento.titulo}`}>
+      <span class="site-header-nombre">{evento.presenta} presenta: {evento.titulo}</span>
     </a>
 
     <a
